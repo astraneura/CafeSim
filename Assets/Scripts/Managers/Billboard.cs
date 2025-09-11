@@ -1,0 +1,25 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+// this script makes the object it is attached to always face the camera, creating a billboard effect
+// it also makes sure that the object only rotates on the horizontal axis, so it doesn't flip
+
+public class Billboard : MonoBehaviour
+{
+    public Camera m_Camera;
+
+    void Start()
+    {
+        m_Camera = Camera.main; ;
+    }
+    void Update()
+    {
+        transform.LookAt(transform.position + m_Camera.transform.rotation * Vector3.forward,
+        m_Camera.transform.rotation * Vector3.up);
+        // The next three lines make this work only on the horizontal axis
+        Vector3 eulerAngles = transform.eulerAngles;
+        eulerAngles.x = 0;
+        transform.eulerAngles = eulerAngles;
+    }
+}

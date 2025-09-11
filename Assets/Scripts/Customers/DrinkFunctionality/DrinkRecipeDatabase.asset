@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09b72b43568ae7246b62039d84df5e8e, type: 3}
+  m_Name: DrinkRecipeDatabase
+  m_EditorClassIdentifier: 
+  allRecipes:
+  - {fileID: 11400000, guid: 7c0380975995a104da760bc1014ffc60, type: 2}
+  - {fileID: 11400000, guid: 5787b97731e39c74794a4ae4321b11c7, type: 2}
+  - {fileID: 11400000, guid: 3d97461b5857d3844b9919368489948e, type: 2}
+  - {fileID: 11400000, guid: 0d7197a2e4acb7e4eba906e9e63d69f1, type: 2}

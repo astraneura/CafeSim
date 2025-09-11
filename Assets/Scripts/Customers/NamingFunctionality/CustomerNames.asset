@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25a53a01207b8da4aac075ac5237acc1, type: 3}
+  m_Name: CustomerNames
+  m_EditorClassIdentifier: 
+  names:
+  - Aveline
+  - Liora
+  - Damon
+  - Seraphine
+  - Marcus
+  - Daniel
+  - Grace
+  - Jacob
+  - Lily
+  - Brianna
+  - Sariah
+  - Kylee
+  - Lucas
+  - Sarah
+  - Bill
+  - Natalie
+  - Hannah
+  - Tessa
+  - Caden
+  - Sylvia
