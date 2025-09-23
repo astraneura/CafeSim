@@ -15,3 +15,4 @@ MonoBehaviour:
   drinkName: Black Coffee
   steps:
   - Add Coffee
+  cost: 3.99

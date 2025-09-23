@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PlayerInteraction : MonoBehaviour
 {
     [SerializeField] private InputActionReference interactAction;
     [SerializeField] private InputActionReference switchAction;
-    
+
     private bool canGenerateOrder = true;
+
+    private float moneyMade = 0f;
+
+    [SerializeField] private TextMeshProUGUI moneyText;
 
 
     private void OnEnable()
@@ -42,6 +47,7 @@ public class PlayerInteraction : MonoBehaviour
                 Customer customer = hit.collider.GetComponent<Customer>();
                 if (OrderManager.Instance.orderCompleted && customer != null)
                 {
+                    customer.CompleteOrder();
                     Destroy(customer.gameObject);
                     Debug.Log("Customer order completed and customer destroyed.");
                     OrderManager.Instance.orderCompleted = false;
@@ -69,5 +75,15 @@ public class PlayerInteraction : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void AddMoney(float amount)
+    {
+        moneyMade += amount;
+        if (moneyText != null)
+        {
+            moneyText.text = "Money: $" + moneyMade.ToString("F2");
+        }
+        Debug.Log("Total Money Made: " + moneyMade);
     }
 }

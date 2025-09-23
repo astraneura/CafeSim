@@ -8,4 +8,5 @@ public class DrinkRecipe : ScriptableObject
 {
     public string drinkName;
     public List<string> steps = new List<string>();
+    public float cost;
 }

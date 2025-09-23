@@ -16,3 +16,4 @@ MonoBehaviour:
   steps:
   - Add Coffee
   - Add Espresso
+  cost: 3.99
