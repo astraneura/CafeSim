@@ -21,20 +21,6 @@ public class OrderManager : MonoBehaviour
     {
         Order newOrder = new Order(customerID, recipe);
         activeOrders.Add(newOrder);
-
-        if (activeOrders.Count == 1)
-        {
-            focusedOrderIndex = 0;
-        }
-    }
-
-    public void SwitchFocus()
-    {
-        if (activeOrders.Count == 0)
-            return;
-
-        focusedOrderIndex = (focusedOrderIndex + 1) % activeOrders.Count;
-        Debug.Log($"Focused order is now: {activeOrders[focusedOrderIndex].customerID}");
     }
 
     public void AttemptStep(string attemptedStep)
@@ -63,11 +49,5 @@ public class OrderManager : MonoBehaviour
             Debug.Log($"Step '{attemptedStep}' failed for order from {current.customerID}. Resetting order.");
             current.Reset();
         }
-    }
-    
-        public Order GetFocusedOrder()
-    {
-        if (activeOrders.Count == 0) return null;
-        return activeOrders[focusedOrderIndex];
     }
 }

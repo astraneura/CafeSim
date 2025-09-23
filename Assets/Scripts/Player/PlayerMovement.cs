@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,12 +10,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
 
-    [Header("Look Settings")]
-    public Transform cameraTransform;
-    public Transform cameraPivot;
-    public float mouseSensitivity = 2f;
-    public float pitchClamp = 90f;
-
     private PlayerInputActions inputActions;
     private Rigidbody rb;
 
@@ -25,10 +20,10 @@ public class PlayerMovement : MonoBehaviour
         inputActions = new PlayerInputActions();
         rb = GetComponent<Rigidbody>();
 
-        Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = true;
+        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = true;
 
-       
+
     }
 
     private void OnEnable()
@@ -48,28 +43,5 @@ public class PlayerMovement : MonoBehaviour
         Vector3 velocity = move * moveSpeed;
 
         rb.linearVelocity = new Vector3(velocity.x, rb.linearVelocity.y, velocity.z);
-    }
-
-    private void LateUpdate()
-    {
-        Vector2 lookInput = inputActions.PlayerMap.Look.ReadValue<Vector2>();
-
-        float mouseX = lookInput.x * mouseSensitivity * Time.deltaTime * 200f;
-        Debug.Log("Mouse X: " + mouseX);
-        float mouseY = lookInput.y * mouseSensitivity * Time.deltaTime * 200f;
-        Debug.Log("Mouse Y: " + mouseY);
-
-        // Rotate player (yaw)
-        transform.Rotate(Vector3.up * mouseX);
-
-        // Rotate camera (pitch)
-        cameraPitch -= mouseY;
-        cameraPitch = Mathf.Clamp(cameraPitch, -pitchClamp, pitchClamp);
-
-        if (cameraTransform != null)
-        {
-            cameraTransform.localRotation = Quaternion.Euler(cameraPitch, 0f, 0f);
-            cameraPivot.localRotation = Quaternion.Euler(cameraPitch, 0f, 0f);
-        }
     }
 }
