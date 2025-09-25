@@ -1357,6 +1357,7 @@ MonoBehaviour:
   - {fileID: 1209607288}
   - {fileID: 118578384}
   currentCustomers: 0
+  spawnDelay: 10
 --- !u!1 &904704397
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,6 +1637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactAction: {fileID: 8395927662875103945, guid: 8e58902bdb4fc704f92d58d534d3cf18, type: 3}
   switchAction: {fileID: -7455078833816043604, guid: 8e58902bdb4fc704f92d58d534d3cf18, type: 3}
+  moneyText: {fileID: 309825544}
 --- !u!114 &1179336105
 MonoBehaviour:
   m_ObjectHideFlags: 0
