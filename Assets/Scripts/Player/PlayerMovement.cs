@@ -12,9 +12,6 @@ public class PlayerMovement : MonoBehaviour
 
     private PlayerInputActions inputActions;
     private Rigidbody rb;
-
-    private float cameraPitch = 0f;
-
     private void Awake()
     {
         inputActions = new PlayerInputActions();

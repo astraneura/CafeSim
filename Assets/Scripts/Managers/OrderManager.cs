@@ -8,7 +8,6 @@ public class OrderManager : MonoBehaviour
     private List<Order> activeOrders = new List<Order>();
     private int focusedOrderIndex = 0;
     public bool orderCompleted;
-
     private void Awake()
     {
         if (Instance == null)
@@ -21,6 +20,7 @@ public class OrderManager : MonoBehaviour
     {
         Order newOrder = new Order(customerID, recipe);
         activeOrders.Add(newOrder);
+
     }
 
     public void AttemptStep(string attemptedStep)

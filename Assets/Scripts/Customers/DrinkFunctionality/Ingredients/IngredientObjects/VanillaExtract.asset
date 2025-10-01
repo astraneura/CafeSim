@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientName: Vanilla Extract
   emotionalQuality: Light
-  emotionalQualityValue: 1
+  emotionalQualityValue: -1
   physicalQuality: Sweet
   physicalQualityValue: 2

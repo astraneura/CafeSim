@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientName: Nutmeg
   emotionalQuality: Fresh
-  emotionalQualityValue: 2
+  emotionalQualityValue: -2
   physicalQuality: Bitter
-  physicalQualityValue: 2
+  physicalQualityValue: -2

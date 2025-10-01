@@ -15,7 +15,10 @@ public class PlayerInteraction : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI moneyText;
 
-
+    private void Start()
+    {
+        DrinkManager.Instance = FindAnyObjectByType<DrinkManager>();
+    } 
     private void OnEnable()
     {
         interactAction.action.performed += OnInteract;
@@ -71,6 +74,12 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     string stepName = stepSource.GetOrderStepName();
                     Debug.Log($"Attempting step: {stepName}");
+                    Ingredient machineIngredient = stepSource.GetIngredient();
+                    if (machineIngredient != null)
+                    {
+                        DrinkManager.Instance.CalculateEmotionalValue(machineIngredient);
+                        DrinkManager.Instance.CalculatePhysicalValue(machineIngredient);
+                    }
                     OrderManager.Instance.AttemptStep(stepName);
                 }
             }

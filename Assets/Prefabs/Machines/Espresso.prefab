@@ -136,6 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a1582b5f00fece488e17c1bbd66bd3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  workDuration: 5
+  espresso: {fileID: 11400000, guid: 97d4ec34b6965e0448ce3559e656eb19, type: 2}
 --- !u!1 &3522463563440104368
 GameObject:
   m_ObjectHideFlags: 0

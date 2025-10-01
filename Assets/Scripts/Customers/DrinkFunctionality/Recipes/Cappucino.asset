@@ -17,4 +17,7 @@ MonoBehaviour:
   - Add Espresso
   - Add Milk
   - Add Foam
+  ingredients:
+  - {fileID: 11400000, guid: 97d4ec34b6965e0448ce3559e656eb19, type: 2}
+  - {fileID: 11400000, guid: ad7d8eb5f3e595b4b8dee57370fcb90d, type: 2}
   cost: 4.99

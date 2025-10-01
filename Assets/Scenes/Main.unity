@@ -515,7 +515,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 100.5373, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &309825544
 MonoBehaviour:
@@ -602,7 +602,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 80.62996, w: 0}
+  m_margin: {x: 0, y: 0, z: 0.28076172, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1357,7 +1357,7 @@ MonoBehaviour:
   - {fileID: 1209607288}
   - {fileID: 118578384}
   currentCustomers: 0
-  spawnDelay: 10
+  spawnDelay: 20
 --- !u!1 &904704397
 GameObject:
   m_ObjectHideFlags: 0
@@ -1468,6 +1468,7 @@ Transform:
   m_Children:
   - {fileID: 861190006}
   - {fileID: 201479641}
+  - {fileID: 1235992400}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1179336097
@@ -1685,6 +1686,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 460439370}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1235992399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1235992400}
+  - component: {fileID: 1235992401}
+  m_Layer: 0
+  m_Name: DrinkManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1235992400
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235992399}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 999001192}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1235992401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235992399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d3b245cab52fe240b978d1018a1e5fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energizedCalmingBalance: 0
+  lightHeavyBalance: 0
+  freshNostalgicBalance: 0
+  upliftingDepressingBalance: 0
+  warmColdBalance: 0
+  creamyThinBalance: 0
+  sweetBitterBalance: 0
+  spicyBlandBalance: 0
+  blessedCursedBalance: 0
 --- !u!1 &1406722758
 GameObject:
   m_ObjectHideFlags: 0
@@ -2435,9 +2489,9 @@ SceneRoots:
   m_Roots:
   - {fileID: 410087041}
   - {fileID: 832575519}
+  - {fileID: 999001192}
   - {fileID: 62355910}
   - {fileID: 1179336101}
-  - {fileID: 999001192}
   - {fileID: 460439370}
   - {fileID: 341901445}
   - {fileID: 1838104250}
