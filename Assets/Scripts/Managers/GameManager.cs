@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     private bool spawnAllowed = true;
     public int currentCustomers = 0;
 
+    [SerializeField] private float spawnDelay;
+
 
     private void Awake()
     {
@@ -58,18 +60,18 @@ public class GameManager : MonoBehaviour
         // Cycle to the next spawn point
         nextSpawnIndex = (nextSpawnIndex + 1) % spawnPoints.Length;
         // Start the coroutine to spawn the next customer after a delay
-        StartCoroutine(SpawnNewCustomerAfterDelay(10f));
+        StartCoroutine(SpawnNewCustomerAfterDelay(spawnDelay));
     }
 
     public void OnCustomerOrderStarted()
     {
         if (!isSpawning)
-            StartCoroutine(SpawnNewCustomerAfterDelay(10f));
+            StartCoroutine(SpawnNewCustomerAfterDelay(spawnDelay));
     }
 
     private IEnumerator AllowCatchUp()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(15f);
         if (currentCustomers < spawnPoints.Length)
         {
             spawnAllowed = true;

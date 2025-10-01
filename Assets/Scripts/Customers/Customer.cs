@@ -133,4 +133,13 @@ public class Customer : MonoBehaviour
         currentStepIndex = 0;
         Debug.Log($"{customerName}'s order has been reset.");
     }
+
+    public void CompleteOrder()
+    {
+        if (currentRecipe != null)
+        {
+            Debug.Log("Adding money: " + currentRecipe.cost);
+            FindAnyObjectByType<PlayerInteraction>().AddMoney(currentRecipe.cost);
+        }
+    }
 }

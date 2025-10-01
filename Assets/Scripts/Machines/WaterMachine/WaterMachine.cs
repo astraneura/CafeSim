@@ -5,10 +5,12 @@ public class WaterMachine : MonoBehaviour, IOrderStepSourceInterface
 {
     public float workDuration = 5f;
     private float workTimer;
-     private bool isWorking = false;
+    private bool isWorking = false;
 
-     private Customer currentCustomer;
+    private Customer currentCustomer;
     private Slider progressBar;
+
+    public Ingredient water;
 
     void Start()
     {
@@ -19,9 +21,11 @@ public class WaterMachine : MonoBehaviour, IOrderStepSourceInterface
 
     void Update()
     {
-        if (isWorking){
+        if (isWorking)
+        {
             workTimer -= Time.deltaTime;
-            if(progressBar != null){
+            if (progressBar != null)
+            {
                 progressBar.value = 1f - (workTimer / workDuration);
             }
             if (workTimer <= 0f)
@@ -66,9 +70,14 @@ public class WaterMachine : MonoBehaviour, IOrderStepSourceInterface
             currentCustomer = null; //reset the current customer
         }
     }
-    
+
     public string GetOrderStepName()
     {
         return "Add Water";
+    }
+    
+    public Ingredient GetIngredient()
+    {
+        return water;
     }
 }
