@@ -67,7 +67,7 @@ public class MilkMachine : MonoBehaviour, IOrderStepSourceInterface
         }
         if (currentCustomer != null)
         {
-            currentCustomer.TryCompleteStep("Add Milk");
+            OrderManager.Instance.AttemptStep("Add Milk");
             drinkManager.CalculateEmotionalValue(milk);
             Debug.Log($"MilkMachine: Completed work for customer {currentCustomer.name}");
             currentCustomer = null; //reset the current customer

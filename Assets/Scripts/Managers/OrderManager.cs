@@ -3,10 +3,14 @@ using UnityEngine;
 
 public class OrderManager : MonoBehaviour
 {
+    // Singleton instance
     public static OrderManager Instance;
 
-    private List<Order> activeOrders = new List<Order>();
-    private int focusedOrderIndex = 0;
+    //private List<Order> activeOrders = new List<Order>();
+    // variables to track the current order and its steps
+    private Order currentOrder;
+    public List<OrderStep> currentOrderSteps = new List<OrderStep>();
+    private int currentStepIndex = 0;
     public bool orderCompleted;
     private void Awake()
     {
@@ -16,38 +20,49 @@ public class OrderManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void AddOrder(string customerID, DrinkRecipe recipe)
+    public void SetCurrentOrder(string customerID, DrinkRecipe recipe)
     {
         Order newOrder = new Order(customerID, recipe);
-        activeOrders.Add(newOrder);
+        currentOrder = newOrder;
+        currentOrderSteps.Clear();
+        orderCompleted = false;
+        foreach (string step in recipe.steps)
+        {
+            currentOrderSteps.Add(new OrderStep { stepName = step });
+        }
 
     }
 
-    public void AttemptStep(string attemptedStep)
+    public bool AttemptStep(string attemptedStep)
     {
-        if (activeOrders.Count == 0)
-            return;
+        if (currentOrder == null)
+            return false;
 
-        Order current = activeOrders[focusedOrderIndex];
-        bool success = current.TryStep(attemptedStep);
+        bool success = currentOrder.TryStep(attemptedStep);
 
         if (success)
         {
-            Debug.Log($"Step '{attemptedStep}' completed for order from {current.customerID}.");
-            if (current.isCompleted)
+            if (currentOrder.isCompleted)
             {
-                Debug.Log($"{current.customerID}'s order complete!");
+                Debug.Log($"{currentOrder.customerID}'s order complete!");
                 orderCompleted = true;
-                activeOrders.RemoveAt(focusedOrderIndex);
-
-                if (focusedOrderIndex >= activeOrders.Count)
-                    focusedOrderIndex = Mathf.Max(0, activeOrders.Count - 1);
+                return false;
+            }
+            else if (currentStepIndex >= currentOrderSteps.Count)
+            {
+                return false; // No more steps to complete
+            }
+            else
+            if (currentOrderSteps[currentStepIndex].stepName == attemptedStep)
+            {
+                currentOrderSteps[currentStepIndex].isCompleted = true;
+                currentStepIndex++;
+                Debug.Log($"Step '{attemptedStep}' completed for order from {currentOrder.customerID}.");
+                return true; // Step completed successfully
             }
         }
-        else
-        {
-            Debug.Log($"Step '{attemptedStep}' failed for order from {current.customerID}. Resetting order.");
-            current.Reset();
-        }
+        Debug.Log($"Step '{attemptedStep}' failed for order from {currentOrder.customerID}. Resetting order.");
+        currentOrder.Reset();
+        return false;
     }
 }

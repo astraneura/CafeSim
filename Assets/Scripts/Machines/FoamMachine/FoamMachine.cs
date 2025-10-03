@@ -63,7 +63,7 @@ public class FoamMachine : MonoBehaviour, IOrderStepSourceInterface
         }
         if (currentCustomer != null)
         {
-            currentCustomer.TryCompleteStep("Add Foam");
+            OrderManager.Instance.AttemptStep("Add Foam");
             Debug.Log($"FoamMachine: Completed work for customer {currentCustomer.name}");
             currentCustomer = null; //reset the current customer
         }

@@ -65,7 +65,7 @@ public class WaterMachine : MonoBehaviour, IOrderStepSourceInterface
         }
         if (currentCustomer != null)
         {
-            currentCustomer.TryCompleteStep("Add Water");
+            OrderManager.Instance.AttemptStep("Add Water");
             Debug.Log($"WaterMachine: Completed work for customer {currentCustomer.name}");
             currentCustomer = null; //reset the current customer
         }

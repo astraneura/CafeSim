@@ -67,7 +67,7 @@ public class EspressoMachine : MonoBehaviour, IOrderStepSourceInterface
         }
         if (currentCustomer != null)
         {
-            currentCustomer.TryCompleteStep("Add Espresso");
+            OrderManager.Instance.AttemptStep("Add Espresso");
             Debug.Log($"espressoMachine: Completed work for customer {currentCustomer.name}");
             currentCustomer = null; //reset the current customer
         }

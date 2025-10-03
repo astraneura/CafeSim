@@ -88,8 +88,8 @@ GameObject:
   - component: {fileID: 2694582649194147637}
   - component: {fileID: 4514751940616697065}
   - component: {fileID: 5204833884505590434}
-  - component: {fileID: 8218306392061933899}
   - component: {fileID: 8220945815320837890}
+  - component: {fileID: -2182087233889268468}
   m_Layer: 0
   m_Name: Customer
   m_TagString: Customer
@@ -216,23 +216,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &8218306392061933899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1081381114282108448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb10087fcda17d046a6c736095795575, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customerName: 
-  nameDatabase: {fileID: 11400000, guid: f16503ee62d5687449d7921844186170, type: 2}
-  drinkRecipeDatabase: {fileID: 11400000, guid: 884f5d38a4ac2ce4d85d5ba125b06efa, type: 2}
-  currentRecipe: {fileID: 0}
-  orderTimeLimit: 30
 --- !u!114 &8220945815320837890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,6 +229,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameTextBox: {fileID: 2703869112402820250}
+--- !u!114 &-2182087233889268468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081381114282108448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ef8ef7c784d5fd44baeea321e2401c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3585129868430930304
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +355,7 @@ GameObject:
   - component: {fileID: 5849941003821057946}
   - component: {fileID: 5475958099162858192}
   m_Layer: 0
-  m_Name: Slider
+  m_Name: PatienceSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

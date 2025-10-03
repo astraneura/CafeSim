@@ -73,7 +73,7 @@ public class Customer : MonoBehaviour
             return false;
 
         currentRecipe = drinkRecipeDatabase.allRecipes[Random.Range(0, drinkRecipeDatabase.allRecipes.Count)];
-        OrderManager.Instance.AddOrder(customerName, currentRecipe);
+        OrderManager.Instance.SetCurrentOrder(customerName, currentRecipe);
 
         foreach (string step in currentRecipe.steps)
         {
@@ -102,26 +102,6 @@ public class Customer : MonoBehaviour
         orderInProgress = false;
         gameManager.currentCustomers--;
         Destroy(gameObject, 2f);
-    }
-
-    public bool TryCompleteStep(string attemptedStep)
-    {
-        if (currentStepIndex >= currentOrder.Count)
-        {
-            return false; // No more steps to complete
-        }
-        if (currentOrder[currentStepIndex].stepName == attemptedStep)
-        {
-            currentOrder[currentStepIndex].isCompleted = true;
-            currentStepIndex++;
-            return true; // Step completed successfully
-        }
-        else
-        {
-            ResetOrderProgress();
-            Debug.Log($"Step '{attemptedStep}' failed for customer {customerName}. Resetting order.");
-            return false;
-        }
     }
 
     void ResetOrderProgress()
