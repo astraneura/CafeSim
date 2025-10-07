@@ -8,7 +8,7 @@ public class MilkMachine : MonoBehaviour, IOrderStepSourceInterface
     private float workTimer;
     private bool isWorking = false;
 
-    private Customer currentCustomer;
+    private ICustomer currentCustomer;
     private Slider progressBar;
 
     [SerializeField] private Ingredient milk;
@@ -37,13 +37,13 @@ public class MilkMachine : MonoBehaviour, IOrderStepSourceInterface
         }
     }
 
-    public void Interact(Customer customer)
+    public void Interact(ICustomer customer)
     {
         if (!isWorking && customer != null)
         {
             currentCustomer = customer;
             StartWork();
-            Debug.Log("MilkMachine: Started working for customer " + customer.name);
+            Debug.Log("MilkMachine: Started working");
         }
     }
 
@@ -67,9 +67,10 @@ public class MilkMachine : MonoBehaviour, IOrderStepSourceInterface
         }
         if (currentCustomer != null)
         {
-            OrderManager.Instance.AttemptStep("Add Milk");
+            string stepName = GetOrderStepName();
+            OrderManager.Instance.AttemptStep(stepName);
             drinkManager.CalculateEmotionalValue(milk);
-            Debug.Log($"MilkMachine: Completed work for customer {currentCustomer.name}");
+            Debug.Log($"MilkMachine: Completed work");
             currentCustomer = null; //reset the current customer
         }
     }

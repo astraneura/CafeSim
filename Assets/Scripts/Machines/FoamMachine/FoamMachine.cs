@@ -7,7 +7,7 @@ public class FoamMachine : MonoBehaviour, IOrderStepSourceInterface
     private float workTimer;
     private bool isWorking = false;
 
-    private Customer currentCustomer;
+    private ICustomer currentCustomer;
     private Slider progressBar;
 
     void Start()
@@ -33,13 +33,13 @@ public class FoamMachine : MonoBehaviour, IOrderStepSourceInterface
         }
     }
 
-    public void Interact(Customer customer)
+    public void Interact(ICustomer customer)
     {
         if (!isWorking && customer != null)
         {
             currentCustomer = customer;
             StartWork();
-            Debug.Log("FoamMachine: Started working for customer " + customer.name);
+            Debug.Log("FoamMachine: Started working");
         }
     }
 
@@ -63,8 +63,9 @@ public class FoamMachine : MonoBehaviour, IOrderStepSourceInterface
         }
         if (currentCustomer != null)
         {
-            OrderManager.Instance.AttemptStep("Add Foam");
-            Debug.Log($"FoamMachine: Completed work for customer {currentCustomer.name}");
+            string stepName = GetOrderStepName();
+            OrderManager.Instance.AttemptStep(stepName);
+            Debug.Log($"FoamMachine: Completed work");
             currentCustomer = null; //reset the current customer
         }
     }

@@ -12,6 +12,8 @@ public class OrderManager : MonoBehaviour
     public List<OrderStep> currentOrderSteps = new List<OrderStep>();
     private int currentStepIndex = 0;
     public bool orderCompleted;
+
+    public ICustomer currentCustomer { get; private set; }
     private void Awake()
     {
         if (Instance == null)
@@ -20,11 +22,14 @@ public class OrderManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void SetCurrentOrder(string customerID, DrinkRecipe recipe)
+    public void SetCurrentOrder(ICustomer customer, DrinkRecipe recipe)
     {
-        Order newOrder = new Order(customerID, recipe);
+        currentCustomer = customer;
+
+        Order newOrder = new Order(customer.CustomerName, recipe);
         currentOrder = newOrder;
         currentOrderSteps.Clear();
+        currentStepIndex = 0;
         orderCompleted = false;
         foreach (string step in recipe.steps)
         {
@@ -64,5 +69,14 @@ public class OrderManager : MonoBehaviour
         Debug.Log($"Step '{attemptedStep}' failed for order from {currentOrder.customerID}. Resetting order.");
         currentOrder.Reset();
         return false;
+    }
+
+    // clear all the order states
+    public void ClearCurrentOrder()
+    {
+        currentOrder = null;
+        currentOrderSteps.Clear();
+        currentStepIndex = 0;
+        orderCompleted = false;
     }
 }

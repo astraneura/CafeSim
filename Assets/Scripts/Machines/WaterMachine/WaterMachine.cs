@@ -7,7 +7,7 @@ public class WaterMachine : MonoBehaviour, IOrderStepSourceInterface
     private float workTimer;
     private bool isWorking = false;
 
-    private Customer currentCustomer;
+    private ICustomer currentCustomer;
     private Slider progressBar;
 
     public Ingredient water;
@@ -35,13 +35,13 @@ public class WaterMachine : MonoBehaviour, IOrderStepSourceInterface
         }
     }
 
-    public void Interact(Customer customer)
+    public void Interact(ICustomer customer)
     {
         if (!isWorking && customer != null)
         {
             currentCustomer = customer;
             StartWork();
-            Debug.Log("WaterMachine: Started working for customer " + customer.name);
+            Debug.Log("WaterMachine: Started working");
         }
     }
 
@@ -65,8 +65,9 @@ public class WaterMachine : MonoBehaviour, IOrderStepSourceInterface
         }
         if (currentCustomer != null)
         {
-            OrderManager.Instance.AttemptStep("Add Water");
-            Debug.Log($"WaterMachine: Completed work for customer {currentCustomer.name}");
+            string stepName = GetOrderStepName();
+            OrderManager.Instance.AttemptStep(stepName);
+            Debug.Log($"WaterMachine: Completed work");
             currentCustomer = null; //reset the current customer
         }
     }

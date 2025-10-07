@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 4514751940616697065}
   - component: {fileID: 5204833884505590434}
   - component: {fileID: 8220945815320837890}
-  - component: {fileID: -2182087233889268468}
+  - component: {fileID: 1273093430043608580}
   m_Layer: 0
   m_Name: Customer
   m_TagString: Customer
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameTextBox: {fileID: 2703869112402820250}
---- !u!114 &-2182087233889268468
+--- !u!114 &1273093430043608580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -241,6 +241,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ef8ef7c784d5fd44baeea321e2401c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameDatabase: {fileID: 11400000, guid: f16503ee62d5687449d7921844186170, type: 2}
+  drinkRecipeDatabase: {fileID: 11400000, guid: 884f5d38a4ac2ce4d85d5ba125b06efa, type: 2}
+  customerName: 
+  orderTimeLimit: 30
+  currentRecipe: {fileID: 0}
+  currentOrder: []
 --- !u!1 &3585129868430930304
 GameObject:
   m_ObjectHideFlags: 0
