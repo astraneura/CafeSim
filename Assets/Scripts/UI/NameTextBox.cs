@@ -8,32 +8,39 @@ using UnityEngine.UI;
 
 public class NameTextBox : MonoBehaviour
 {
-    private Customer customer;
-    private string customerNameText;
+    private ICustomer customer;
     public TextMeshProUGUI nameTextBox;
-    private Transform trans;
+    private Transform cameraTransform;
     private Vector3 offset = new Vector3(0, 180, 0);
     void Start()
     {
         nameTextBox = GetComponentInChildren<TextMeshProUGUI>();
-        trans = GameObject.Find("Camera").GetComponent<Transform>();
+        cameraTransform = Camera.main.transform;
 
-        customer = GetComponentInParent<Customer>();
+        foreach (var mb in GetComponents<MonoBehaviour>())
+        {
+            if (mb is ICustomer)
+            {
+                customer = (ICustomer)mb;
+                break;
+            }
+        }
+
         if (customer != null)
         {
-            customerNameText = customer.customerName;
-            Debug.Log($"Customer Name: {customerNameText}");
-            nameTextBox.text = customerNameText;
+            nameTextBox.text = customer.CustomerName;
+            Debug.Log("Customer name: " + customer.CustomerName);
         }
         else
         {
-            Debug.LogError("Customer component not found in parent.");
+            nameTextBox.text = "No Name";
+            Debug.LogWarning("No ICustomer implementation found on the GameObject.");
         }
     }
 
-    void Update()
+    void LateUpdate()
     {
-        transform.LookAt(trans);
+        transform.LookAt(cameraTransform);
         transform.Rotate(offset);
     }
 }

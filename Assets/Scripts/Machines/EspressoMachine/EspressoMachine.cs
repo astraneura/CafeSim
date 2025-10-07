@@ -8,7 +8,7 @@ public class EspressoMachine : MonoBehaviour, IOrderStepSourceInterface
     private float workTimer;
     private bool isWorking = false;
 
-    private Customer currentCustomer;
+    private ICustomer currentCustomer;
     private Slider progressBar;
 
     public Ingredient espresso;
@@ -37,13 +37,13 @@ public class EspressoMachine : MonoBehaviour, IOrderStepSourceInterface
         }
     }
 
-    public void Interact(Customer customer)
+    public void Interact(ICustomer customer)
     {
         if (!isWorking && customer != null)
         {
             currentCustomer = customer;
             StartWork();
-            Debug.Log("espressoMachine: Started working for customer " + customer.name);
+            Debug.Log("espressoMachine: Started working");
         }
     }
 
@@ -67,8 +67,9 @@ public class EspressoMachine : MonoBehaviour, IOrderStepSourceInterface
         }
         if (currentCustomer != null)
         {
-            OrderManager.Instance.AttemptStep("Add Espresso");
-            Debug.Log($"espressoMachine: Completed work for customer {currentCustomer.name}");
+            string stepName = GetOrderStepName();
+            OrderManager.Instance.AttemptStep(stepName);
+            Debug.Log($"espressoMachine: Completed work");
             currentCustomer = null; //reset the current customer
         }
     }

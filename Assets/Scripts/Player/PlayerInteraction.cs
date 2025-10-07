@@ -18,7 +18,7 @@ public class PlayerInteraction : MonoBehaviour
     private void Start()
     {
         DrinkManager.Instance = FindAnyObjectByType<DrinkManager>();
-    } 
+    }
     private void OnEnable()
     {
         interactAction.action.performed += OnInteract;
@@ -46,22 +46,34 @@ public class PlayerInteraction : MonoBehaviour
                     Debug.Log("Cannot generate a new order until the current one is completed.");
                     return;
                 }
-                // Try to get the Customer component
-                Customer customer = hit.collider.GetComponent<Customer>();
+                // Loop through all MonoBehaviours on the hit object to find one that implements ICustomer
+                ICustomer customer = null;
+                foreach (var mb in hit.collider.GetComponents<MonoBehaviour>())
+                {
+                    if (mb is ICustomer)
+                    {
+                        customer = (ICustomer)mb;
+                        break;
+                    }
+                }
+
+                if (customer == null)
+                {
+                    Debug.LogError("Hit object tagged 'Customer' but no ICustomer found.");
+                    return;
+                }
+
                 if (OrderManager.Instance.orderCompleted && customer != null)
                 {
                     customer.CompleteOrder();
-                    Destroy(customer.gameObject);
-                    Debug.Log("Customer order completed and customer destroyed.");
+                    Debug.Log("Customer order completed.");
                     OrderManager.Instance.orderCompleted = false;
                     canGenerateOrder = true; // Allow generating a new order
                 }
                 else
-                if (customer != null && customer.currentOrderNum < customer.maxOrderNum && canGenerateOrder)
+                if (customer != null)
                 {
-                    customer.currentOrderNum++;
                     customer.GenerateOrder();
-                    Debug.Log("Generated order for customer.");
                     canGenerateOrder = false; // limit to one active order at a time
 
                 }
@@ -69,18 +81,22 @@ public class PlayerInteraction : MonoBehaviour
             else
             {
                 // Handle other interactions
-                IOrderStepSourceInterface stepSource = hit.collider.GetComponent<IOrderStepSourceInterface>();
-                if (stepSource != null)
+                IOrderStepSourceInterface machine = hit.collider.GetComponent<IOrderStepSourceInterface>();
+                if (machine != null)
                 {
-                    string stepName = stepSource.GetOrderStepName();
-                    Debug.Log($"Attempting step: {stepName}");
-                    Ingredient machineIngredient = stepSource.GetIngredient();
+                    ICustomer activeCustomer = OrderManager.Instance.currentCustomer;
+                    if (activeCustomer == null)
+                    {
+                        Debug.Log("No active customer to serve.");
+                        return;
+                    }
+                    machine.Interact(activeCustomer);
+                    Ingredient machineIngredient = machine.GetIngredient();
                     if (machineIngredient != null)
                     {
                         DrinkManager.Instance.CalculateEmotionalValue(machineIngredient);
                         DrinkManager.Instance.CalculatePhysicalValue(machineIngredient);
                     }
-                    OrderManager.Instance.AttemptStep(stepName);
                 }
             }
         }
