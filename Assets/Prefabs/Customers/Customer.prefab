@@ -247,6 +247,7 @@ MonoBehaviour:
   orderTimeLimit: 30
   currentRecipe: {fileID: 0}
   currentOrder: []
+  patienceSlider: {fileID: 5475958099162858192}
 --- !u!1 &3585129868430930304
 GameObject:
   m_ObjectHideFlags: 0

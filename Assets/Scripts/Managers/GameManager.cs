@@ -17,14 +17,22 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float spawnDelay;
 
+    // variables for tracking the day timer
+    private TextMeshProUGUI dayTimerText;
+    public float dayDuration = 300f; // Duration of the day in seconds
+    private float dayTimer = 0f;
 
     private void Awake()
     {
+        dayTimerText = GameObject.Find("DayTimer").GetComponent<TextMeshProUGUI>();
+        dayTimer = dayDuration;
+
         StartCoroutine(SpawnNewCustomerAfterDelay(1f));
     }
 
     void Update()
     {
+        UpdateDayTimer();
         if (currentCustomers == spawnPoints.Length)
         {
             spawnAllowed = false;
@@ -77,5 +85,27 @@ public class GameManager : MonoBehaviour
             spawnAllowed = true;
             SpawnNewCustomer();
         }
+    }
+
+    private void UpdateDayTimer()
+    {
+        if (dayTimer > 0)
+        {
+            dayTimer -= Time.deltaTime;
+            int minutes = Mathf.FloorToInt(dayTimer / 60f);
+            int seconds = Mathf.FloorToInt(dayTimer % 60f);
+            dayTimerText.text = $"{minutes:00}:{seconds:00}";
+        }
+        else
+        {
+            dayTimer = 0;
+            dayTimerText.text = "00:00";
+            EndDay();
+        }
+    }
+
+    private void EndDay()
+    {
+        SceneManager.LoadScene("End");
     }
 }

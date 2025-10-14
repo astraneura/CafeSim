@@ -1,17 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class OrderManager : MonoBehaviour
 {
     // Singleton instance
     public static OrderManager Instance;
 
-    //private List<Order> activeOrders = new List<Order>();
+    private PlayerInteraction pInteract;
     // variables to track the current order and its steps
     private Order currentOrder;
     public List<OrderStep> currentOrderSteps = new List<OrderStep>();
     private int currentStepIndex = 0;
     public bool orderCompleted;
+
+    // variables for the UI
+    [SerializeField] private TextMeshProUGUI orderStepText;
+    [SerializeField] private Transform orderStepsContainer;
 
     public ICustomer currentCustomer { get; private set; }
     private void Awake()
@@ -20,6 +26,8 @@ public class OrderManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+
+        pInteract = FindAnyObjectByType<PlayerInteraction>();
     }
 
     public void SetCurrentOrder(ICustomer customer, DrinkRecipe recipe)
@@ -34,6 +42,8 @@ public class OrderManager : MonoBehaviour
         foreach (string step in recipe.steps)
         {
             currentOrderSteps.Add(new OrderStep { stepName = step });
+            var stepTextObj = Instantiate(orderStepText, orderStepsContainer);
+            stepTextObj.text = step;
         }
 
     }
@@ -50,6 +60,8 @@ public class OrderManager : MonoBehaviour
             if (currentOrder.isCompleted)
             {
                 Debug.Log($"{currentOrder.customerID}'s order complete!");
+                Transform completedStepTransform = orderStepsContainer.GetChild(currentStepIndex);
+                completedStepTransform.GetComponent<TextMeshProUGUI>().color = Color.green;
                 orderCompleted = true;
                 return false;
             }
@@ -61,6 +73,12 @@ public class OrderManager : MonoBehaviour
             if (currentOrderSteps[currentStepIndex].stepName == attemptedStep)
             {
                 currentOrderSteps[currentStepIndex].isCompleted = true;
+                // Change color of the completed step's UI element
+                if (currentStepIndex < orderStepsContainer.childCount)
+                {
+                    Transform completedStepTransform = orderStepsContainer.GetChild(currentStepIndex);
+                    completedStepTransform.GetComponent<TextMeshProUGUI>().color = Color.green;
+                }
                 currentStepIndex++;
                 Debug.Log($"Step '{attemptedStep}' completed for order from {currentOrder.customerID}.");
                 return true; // Step completed successfully
@@ -68,6 +86,15 @@ public class OrderManager : MonoBehaviour
         }
         Debug.Log($"Step '{attemptedStep}' failed for order from {currentOrder.customerID}. Resetting order.");
         currentOrder.Reset();
+        currentStepIndex = 0;
+        for (int i = 0; i < currentOrderSteps.Count; i++)
+        {
+            currentOrderSteps[i].isCompleted = false;
+        }
+        foreach (Transform child in orderStepsContainer)
+        {
+            child.GetComponent<TextMeshProUGUI>().color = Color.white;
+        }
         return false;
     }
 
@@ -78,5 +105,12 @@ public class OrderManager : MonoBehaviour
         currentOrderSteps.Clear();
         currentStepIndex = 0;
         orderCompleted = false;
+        currentCustomer = null;
+        DrinkManager.Instance.ResetDrinkValues();
+        pInteract.canGenerateOrder = true; // Allow generating a new order
+        foreach (Transform child in orderStepsContainer)
+        {
+            Destroy(child.gameObject);
+        }
     }
 }

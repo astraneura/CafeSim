@@ -6,14 +6,14 @@ public class DrinkManager : MonoBehaviour
     public static DrinkManager Instance;
     public static OrderManager orderManager;
 
-// Emotional Value Tracking
+    // Emotional Value Tracking
     public int energizedCalmingBalance;
     public int lightHeavyBalance;
     public int freshNostalgicBalance;
     public int upliftingDepressingBalance;
     public int warmColdBalance;
 
-// Physical Value Tracking
+    // Physical Value Tracking
     public int creamyThinBalance;
     public int sweetBitterBalance;
     public int spicyBlandBalance;
@@ -105,5 +105,19 @@ public class DrinkManager : MonoBehaviour
             return blessedCursedBalance;
         }
         return 0;
+    }
+    
+    public void ResetDrinkValues()
+    {
+        energizedCalmingBalance = 0;
+        lightHeavyBalance = 0;
+        freshNostalgicBalance = 0;
+        upliftingDepressingBalance = 0;
+        warmColdBalance = 0;
+
+        creamyThinBalance = 0;
+        sweetBitterBalance = 0;
+        spicyBlandBalance = 0;
+        blessedCursedBalance = 0;
     }
 }

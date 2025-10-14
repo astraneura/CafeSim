@@ -51,6 +51,10 @@ public class Order
             step.isCompleted = false;
 
         currentStepIndex = 0;
+        Debug.Log(currentStepIndex);
         isCompleted = false;
+
+        // Reset DrinkManager balances when order is reset
+        DrinkManager.Instance.ResetDrinkValues();
     }
 }

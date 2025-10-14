@@ -7,6 +7,7 @@ public class GenericCustomer : MonoBehaviour, ICustomer
     //manager references
     private GameManager gameManager;
     private DrinkManager drinkManager;
+    private OrderManager orderManager;
 
     //database references
     public CustomerNameDatabase nameDatabase; // Reference to the name database
@@ -22,10 +23,19 @@ public class GenericCustomer : MonoBehaviour, ICustomer
     public DrinkRecipe currentRecipe;
     public List<OrderStep> currentOrder = new List<OrderStep>();
 
+    public Slider patienceSlider;
+
     void Awake()
     {
         customerName = GetCustomerName();
+        patienceSlider.gameObject.SetActive(false);
+        orderManager = FindAnyObjectByType<OrderManager>();
 
+    }
+
+    void Update()
+    {
+        UpdateOrderTimer();
     }
     public string GetCustomerName()
     {
@@ -53,6 +63,12 @@ public class GenericCustomer : MonoBehaviour, ICustomer
 
         OrderManager.Instance.SetCurrentOrder(this, currentRecipe);
 
+        if (patienceSlider != null)
+        {
+            patienceSlider.gameObject.SetActive(true);
+            patienceSlider.value = 1f;
+        }
+
         if (gameManager != null)
             gameManager.OnCustomerOrderStarted();
 
@@ -66,6 +82,12 @@ public class GenericCustomer : MonoBehaviour, ICustomer
             return;
 
         orderTimer -= Time.deltaTime;
+
+        if (patienceSlider != null)
+        {
+            patienceSlider.value = orderTimer / orderTimeLimit;
+        }
+
         if (orderTimer <= 0f)
         {
             orderInProgress = false;
@@ -78,6 +100,7 @@ public class GenericCustomer : MonoBehaviour, ICustomer
     {
         orderInProgress = false;
         Debug.Log($"{customerName} ran out of patience and left!");
+        orderManager.ClearCurrentOrder();
         Destroy(gameObject, 2f);
     }
 

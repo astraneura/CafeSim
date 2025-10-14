@@ -9,7 +9,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private InputActionReference interactAction;
     [SerializeField] private InputActionReference switchAction;
 
-    private bool canGenerateOrder = true;
+    public bool canGenerateOrder = true;
 
     private float moneyMade = 0f;
 
