@@ -7,7 +7,6 @@ using TMPro;
 public class PlayerInteraction : MonoBehaviour
 {
     [SerializeField] private InputActionReference interactAction;
-    [SerializeField] private InputActionReference switchAction;
 
     public bool canGenerateOrder = true;
 
@@ -105,6 +104,7 @@ public class PlayerInteraction : MonoBehaviour
     public void AddMoney(float amount)
     {
         moneyMade += amount;
+        OrderManager.Instance.totalMoneyMade = moneyMade;
         if (moneyText != null)
         {
             moneyText.text = "Money: $" + moneyMade.ToString("F2");

@@ -14,6 +14,9 @@ public class OrderManager : MonoBehaviour
     public List<OrderStep> currentOrderSteps = new List<OrderStep>();
     private int currentStepIndex = 0;
     public bool orderCompleted;
+    public int totalOrdersCompleted = 0;
+    public int totalOrdersFailed = 0;
+    public float totalMoneyMade = 0;
 
     // variables for the UI
     [SerializeField] private TextMeshProUGUI orderStepText;
@@ -28,6 +31,9 @@ public class OrderManager : MonoBehaviour
             Destroy(gameObject);
 
         pInteract = FindAnyObjectByType<PlayerInteraction>();
+        totalOrdersCompleted = 0;
+        totalOrdersFailed = 0;
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public void SetCurrentOrder(ICustomer customer, DrinkRecipe recipe)
@@ -63,6 +69,7 @@ public class OrderManager : MonoBehaviour
                 Transform completedStepTransform = orderStepsContainer.GetChild(currentStepIndex);
                 completedStepTransform.GetComponent<TextMeshProUGUI>().color = Color.green;
                 orderCompleted = true;
+                totalOrdersCompleted++;
                 return false;
             }
             else if (currentStepIndex >= currentOrderSteps.Count)

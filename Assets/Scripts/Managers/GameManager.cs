@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     //variables for spawning customers
     public GameObject customerPrefab;
+    public GameObject confusedCustomerPrefab;
     public Transform[] spawnPoints;
     private int nextSpawnIndex = 0;
     private bool isSpawning = false;
@@ -60,21 +61,32 @@ public class GameManager : MonoBehaviour
             Debug.Log("Spawning is currently not allowed.");
             return;
         }
-        Transform spawnPoint = spawnPoints[nextSpawnIndex];
-        Instantiate(customerPrefab, spawnPoint.position, spawnPoint.rotation);
-        Debug.Log($"Spawned customer at {spawnPoint.name}");
-        currentCustomers++;
-
-        // Cycle to the next spawn point
-        nextSpawnIndex = (nextSpawnIndex + 1) % spawnPoints.Length;
-        // Start the coroutine to spawn the next customer after a delay
-        StartCoroutine(SpawnNewCustomerAfterDelay(spawnDelay));
+        int randomNumber = Random.Range(0, 100);
+        Debug.Log(randomNumber);
+        if (randomNumber < 20) // 20% chance to spawn a confused customer
+        {
+            SpawnConfusedCustomer();
+        }
+        else
+        {
+            SpawnRegularCustomer();
+        }
     }
 
     public void OnCustomerOrderStarted()
     {
         if (!isSpawning)
             StartCoroutine(SpawnNewCustomerAfterDelay(spawnDelay));
+    }
+
+    public void OnCustomerOrderCompleted()
+    {
+        currentCustomers = Mathf.Max(0, currentCustomers - 1);
+        if (currentCustomers < spawnPoints.Length)
+        {
+            spawnAllowed = true;
+            SpawnNewCustomer();
+        }
     }
 
     private IEnumerator AllowCatchUp()
@@ -85,6 +97,36 @@ public class GameManager : MonoBehaviour
             spawnAllowed = true;
             SpawnNewCustomer();
         }
+    }
+
+    private void SpawnConfusedCustomer()
+    {
+        if (spawnPoints.Length == 0)
+        {
+            Debug.LogWarning("No spawn points assigned!");
+            return;
+        }
+        Transform spawnPoint = spawnPoints[nextSpawnIndex];
+        Instantiate(confusedCustomerPrefab, spawnPoint.position, spawnPoint.rotation);
+        currentCustomers++;
+        // Cycle to the next spawn point
+        nextSpawnIndex = (nextSpawnIndex + 1) % spawnPoints.Length;
+        spawnAllowed = false; // set spawning to false to allow player time to create custom drink
+    }
+
+    private void SpawnRegularCustomer()
+    {
+        if (spawnPoints.Length == 0)
+        {
+            Debug.LogWarning("No spawn points assigned!");
+            return;
+        }
+        Transform spawnPoint = spawnPoints[nextSpawnIndex];
+        Instantiate(customerPrefab, spawnPoint.position, spawnPoint.rotation);
+        currentCustomers++;
+        // Cycle to the next spawn point
+        nextSpawnIndex = (nextSpawnIndex + 1) % spawnPoints.Length;
+        SpawnNewCustomerAfterDelay(spawnDelay); // continue spawning regular customers
     }
 
     private void UpdateDayTimer()
