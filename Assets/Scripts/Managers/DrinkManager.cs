@@ -4,7 +4,6 @@ using UnityEngine;
 public class DrinkManager : MonoBehaviour
 {
     public static DrinkManager Instance;
-    public static OrderManager orderManager;
 
     // Emotional Value Tracking
     public int energizedCalmingBalance;
@@ -27,11 +26,6 @@ public class DrinkManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
-    }
-
-    private void Start()
-    {
-        orderManager = FindAnyObjectByType<OrderManager>();
     }
 
     public int CalculateEmotionalValue(Ingredient ingredient)

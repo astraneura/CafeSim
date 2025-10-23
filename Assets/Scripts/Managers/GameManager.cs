@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using Unity.VisualScripting;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,7 +16,6 @@ public class GameManager : MonoBehaviour
     private bool isSpawning = false;
     private bool spawnAllowed = true;
     public int currentCustomers = 0;
-
     [SerializeField] private float spawnDelay;
 
     // variables for tracking the day timer
@@ -23,10 +23,23 @@ public class GameManager : MonoBehaviour
     public float dayDuration = 300f; // Duration of the day in seconds
     private float dayTimer = 0f;
 
+    //variables for managing the machines
+    [SerializeField] private List<GameObject> regularMachines;
+    [SerializeField] private List<GameObject> specialMachines;
+
     private void Awake()
     {
         dayTimerText = GameObject.Find("DayTimer").GetComponent<TextMeshProUGUI>();
         dayTimer = dayDuration;
+
+        foreach (var machine in specialMachines)
+        {
+            machine.SetActive(false);
+        }
+        foreach (var machine in regularMachines)
+        {
+            machine.SetActive(true);
+        }
 
         StartCoroutine(SpawnNewCustomerAfterDelay(1f));
     }
@@ -63,13 +76,29 @@ public class GameManager : MonoBehaviour
         }
         int randomNumber = Random.Range(0, 100);
         Debug.Log(randomNumber);
-        if (randomNumber < 20) // 20% chance to spawn a confused customer
+        if (randomNumber < 101) // 20% chance to spawn a confused customer
         {
             SpawnConfusedCustomer();
+            foreach (var machine in regularMachines)
+            {
+                machine.SetActive(false);
+            }
+            foreach (var machine in specialMachines)
+            {
+                machine.SetActive(true);
+            }
         }
         else
         {
             SpawnRegularCustomer();
+            foreach (var machine in regularMachines)
+            {
+                machine.SetActive(true);
+            }
+            foreach (var machine in specialMachines)
+            {
+                machine.SetActive(false);
+            }
         }
     }
 
@@ -111,7 +140,8 @@ public class GameManager : MonoBehaviour
         currentCustomers++;
         // Cycle to the next spawn point
         nextSpawnIndex = (nextSpawnIndex + 1) % spawnPoints.Length;
-        spawnAllowed = false; // set spawning to false to allow player time to create custom drink
+        SpawnNewCustomerAfterDelay(spawnDelay); // remove later - allow more customers for testing 
+        //spawnAllowed = false; // set spawning to false to allow player time to create custom drink
     }
 
     private void SpawnRegularCustomer()

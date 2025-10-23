@@ -3,14 +3,14 @@ using TMPro;
 
 public class WaterMachineUI : MonoBehaviour
 {
-    private WaterMachine waterMachine;
+    [SerializeField] private WaterMachine waterMachine;
+    [SerializeField] private SpecialWater specialWater;
     public TextMeshProUGUI machineNameTextUI;
     void Start()
     {
         machineNameTextUI = GetComponentInChildren<TextMeshProUGUI>();
 
-        waterMachine = GetComponentInParent<WaterMachine>();
-        if (waterMachine != null)
+        if (waterMachine != null || specialWater != null)
         {
             machineNameTextUI.text = "Water Machine"; //set name directly
         }

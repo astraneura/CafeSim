@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 9085188142469678394}
   - component: {fileID: 4932747140612063156}
   - component: {fileID: 7877126067630285353}
-  - component: {fileID: 4892776318406465012}
-  - component: {fileID: 4600285522807334839}
+  - component: {fileID: -441793587813571385}
+  - component: {fileID: -7530126342377801003}
   m_Layer: 0
-  m_Name: Water
+  m_Name: SpecialFoam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4892776318406465012
+--- !u!114 &-441793587813571385
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,24 +120,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 3367457039641147747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e01d4638d279474c85e88e0ef848539, type: 3}
+  m_Script: {fileID: 11500000, guid: 01c08e8a5e683ca41b4980e64270d084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  workDuration: 5
-  water: {fileID: 11400000, guid: 95dd06e16523ac04fa443502ea21aeb2, type: 2}
---- !u!114 &4600285522807334839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3367457039641147747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a9765eecd67eaf4b88b3b7696844b9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  foamMachine: {fileID: 0}
+  specialFoam: {fileID: -7530126342377801003}
   machineNameTextUI: {fileID: 0}
+--- !u!114 &-7530126342377801003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3367457039641147747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4283617a88dbede42b3a29b4e3c32318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foam: {fileID: 0}
+  workDuration: 5
 --- !u!1 &3522463563440104368
 GameObject:
   m_ObjectHideFlags: 0

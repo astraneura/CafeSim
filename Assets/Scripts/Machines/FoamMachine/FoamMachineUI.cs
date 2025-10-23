@@ -4,14 +4,14 @@ using TMPro;
 
 public class FoamMachineUI : MonoBehaviour
 {
-    private FoamMachine foamMachine;
+    [SerializeField] private FoamMachine foamMachine;
+    [SerializeField] private SpecialFoam specialFoam;
     public TextMeshProUGUI machineNameTextUI;
     void Start()
     {
         machineNameTextUI = GetComponentInChildren<TextMeshProUGUI>();
 
-        foamMachine = GetComponentInParent<FoamMachine>();
-        if (foamMachine != null)
+        if (foamMachine != null || specialFoam != null)
         {
             machineNameTextUI.text = "Foam Machine"; //set name directly
         }

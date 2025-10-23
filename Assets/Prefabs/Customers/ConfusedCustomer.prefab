@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933fe9b4d31de1a439413611e36002f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameDatabase: {fileID: 11400000, guid: f16503ee62d5687449d7921844186170, type: 2}
   customerName: 
 --- !u!1 &3585129868430930304
 GameObject:

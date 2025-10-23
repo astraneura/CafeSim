@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.InputSystem.Interactions;
 
 public class ConfusedCustomer : MonoBehaviour, ICustomer
 {
     //database reference
-    private CustomerNameDatabase nameDatabase;
+    [SerializeField] private CustomerNameDatabase nameDatabase;
     public string CustomerName => customerName;
     public string customerName;
 
@@ -13,14 +14,89 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
     private string chosenPhysicalQuality;
     private int desiredEmotionalQualityValue;
     private int desiredPhysicalQualityValue;
+    private int emotionalBalance;
+    private int physicalBalance;
+
+    private PlayerInteraction pInteract;
     void Start()
     {
         customerName = GetCustomerName();
+        pInteract = FindAnyObjectByType<PlayerInteraction>();
     }
 
     void Update()
     {
+        if (!pInteract.canGenerateOrder)
+        {
+            switch (chosenEmotionalQuality)
+            {
+                case "Energizing":
+                    emotionalBalance = DrinkManager.Instance.energizedCalmingBalance;
+                    break;
+                case "Calming":
+                    emotionalBalance = DrinkManager.Instance.energizedCalmingBalance;
+                    break;
+                case "Light":
+                    emotionalBalance = DrinkManager.Instance.lightHeavyBalance;
+                    break;
+                case "Heavy":
+                    emotionalBalance = DrinkManager.Instance.lightHeavyBalance;
+                    break;
+                case "Fresh":
+                    emotionalBalance = DrinkManager.Instance.freshNostalgicBalance;
+                    break;
+                case "Nostalgic":
+                    emotionalBalance = DrinkManager.Instance.freshNostalgicBalance;
+                    break;
+                case "Uplifting":
+                    emotionalBalance = DrinkManager.Instance.upliftingDepressingBalance;
+                    break;
+                case "Depressing":
+                    emotionalBalance = DrinkManager.Instance.upliftingDepressingBalance;
+                    break;
+                case "Warm":
+                    emotionalBalance = DrinkManager.Instance.warmColdBalance;
+                    break;
+                case "Cold":
+                    emotionalBalance = DrinkManager.Instance.warmColdBalance;
+                    break;
+                default:
+                    emotionalBalance = 0;
+                    break;
+            }
 
+            switch (chosenPhysicalQuality)
+            {
+                case "Creamy":
+                    physicalBalance = DrinkManager.Instance.creamyThinBalance;
+                    break;
+                case "Thin":
+                    physicalBalance = DrinkManager.Instance.creamyThinBalance;
+                    break;
+                case "Sweet":
+                    physicalBalance = DrinkManager.Instance.sweetBitterBalance;
+                    break;
+                case "Bitter":
+                    physicalBalance = DrinkManager.Instance.sweetBitterBalance;
+                    break;
+                case "Spicy":
+                    physicalBalance = DrinkManager.Instance.spicyBlandBalance;
+                    break;
+                case "Bland":
+                    physicalBalance = DrinkManager.Instance.spicyBlandBalance;
+                    break;
+                case "Blessed":
+                    physicalBalance = DrinkManager.Instance.blessedCursedBalance;
+                    break;
+                case "Cursed":
+                    physicalBalance = DrinkManager.Instance.blessedCursedBalance;
+                    break;
+                default:
+                    physicalBalance = 0;
+                    break;
+            }
+            CheckOrderCompletion();
+        }
     }
 
     public string GetCustomerName()
@@ -47,8 +123,17 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
         desiredPhysicalQualityValue = Random.Range(1, 11);
         Debug.Log($"{customerName} wants a drink with {chosenEmotionalQuality} value of {desiredEmotionalQualityValue} and {chosenPhysicalQuality} value of {desiredPhysicalQualityValue}.");
         // add here to pause the day timer in the GameManager
-        
+
         return true;
+    }
+
+    public void CheckOrderCompletion()
+    {
+        if (emotionalBalance == desiredEmotionalQualityValue && physicalBalance == desiredPhysicalQualityValue)
+        {
+            OrderManager.Instance.orderCompleted = true;
+            Debug.Log($"{customerName}'s order is complete!");
+        }
     }
 
     public void CompleteOrder()
@@ -58,6 +143,7 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
         FindAnyObjectByType<PlayerInteraction>().AddMoney(20f);
         Destroy(gameObject, 2f);
     }
+
 
     //Reset Order Progress, Update Order Timer, and On Order Timeout will be unused for this customer type
     public void ResetOrderProgress()
@@ -71,6 +157,8 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
     }
     public void OnOrderTimeout()
     {
-
+        return;
     }
+
+
 }

@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 9085188142469678394}
   - component: {fileID: 4932747140612063156}
   - component: {fileID: 7877126067630285353}
-  - component: {fileID: -6635388330294653730}
-  - component: {fileID: 9063066493525837827}
+  - component: {fileID: 2497580698481630881}
+  - component: {fileID: -5390125292961021986}
   m_Layer: 0
-  m_Name: Milk
+  m_Name: SpecialWater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-6635388330294653730
+--- !u!114 &2497580698481630881
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,11 +120,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3367457039641147747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f27460f34ecb4da458d16ab4c24be53c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a9765eecd67eaf4b88b3b7696844b9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterMachine: {fileID: 0}
+  specialWater: {fileID: -5390125292961021986}
   machineNameTextUI: {fileID: 0}
---- !u!114 &9063066493525837827
+--- !u!114 &-5390125292961021986
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,11 +135,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3367457039641147747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 764da0e7fc0aa2740a2ace7857d16ae0, type: 3}
+  m_Script: {fileID: 11500000, guid: 520ed1b4df00dcd43bcfaa9f948090f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  water: {fileID: 0}
   workDuration: 5
-  milk: {fileID: 11400000, guid: ad7d8eb5f3e595b4b8dee57370fcb90d, type: 2}
 --- !u!1 &3522463563440104368
 GameObject:
   m_ObjectHideFlags: 0
