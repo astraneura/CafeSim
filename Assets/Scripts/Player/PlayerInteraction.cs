@@ -67,6 +67,7 @@ public class PlayerInteraction : MonoBehaviour
                     customer.CompleteOrder();
                     Debug.Log("Customer order completed.");
                     OrderManager.Instance.orderCompleted = false;
+                    GameManager.Instance.OnCustomerOrderCompleted();   
                     canGenerateOrder = true; // Allow generating a new order
                 }
                 else

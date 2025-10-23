@@ -7,6 +7,8 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
+    // Singleton instance
+    public static GameManager Instance;
 
     //variables for spawning customers
     public GameObject customerPrefab;
@@ -29,6 +31,11 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+
         dayTimerText = GameObject.Find("DayTimer").GetComponent<TextMeshProUGUI>();
         dayTimer = dayDuration;
 
@@ -74,9 +81,14 @@ public class GameManager : MonoBehaviour
             Debug.Log("Spawning is currently not allowed.");
             return;
         }
+        if (currentCustomers >= spawnPoints.Length)
+        {
+            Debug.Log("Max customers reached. Pausing spawn cycle.");
+            return;
+        }
         int randomNumber = Random.Range(0, 100);
         Debug.Log(randomNumber);
-        if (randomNumber < 101) // 20% chance to spawn a confused customer
+        if (randomNumber < 0) // 20% chance to spawn a confused customer, temporarily set to 0% for testing
         {
             SpawnConfusedCustomer();
             foreach (var machine in regularMachines)
@@ -140,7 +152,7 @@ public class GameManager : MonoBehaviour
         currentCustomers++;
         // Cycle to the next spawn point
         nextSpawnIndex = (nextSpawnIndex + 1) % spawnPoints.Length;
-        SpawnNewCustomerAfterDelay(spawnDelay); // remove later - allow more customers for testing 
+        StartCoroutine(SpawnNewCustomerAfterDelay(spawnDelay)); // remove later - allow more customers for testing
         //spawnAllowed = false; // set spawning to false to allow player time to create custom drink
     }
 
@@ -156,7 +168,7 @@ public class GameManager : MonoBehaviour
         currentCustomers++;
         // Cycle to the next spawn point
         nextSpawnIndex = (nextSpawnIndex + 1) % spawnPoints.Length;
-        SpawnNewCustomerAfterDelay(spawnDelay); // continue spawning regular customers
+        StartCoroutine(SpawnNewCustomerAfterDelay(spawnDelay)); // continue spawning regular customers
     }
 
     private void UpdateDayTimer()
