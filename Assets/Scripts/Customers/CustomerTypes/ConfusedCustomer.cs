@@ -18,7 +18,7 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
     private int physicalBalance;
 
     private PlayerInteraction pInteract;
-    void Start()
+    void Awake()
     {
         customerName = GetCustomerName();
         pInteract = FindAnyObjectByType<PlayerInteraction>();
@@ -119,8 +119,8 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
         chosenPhysicalQuality = chosenQualities.physicalQualities[Random.Range(0, chosenQualities.physicalQualities.Count)];
 
         // Generate desired quality values
-        desiredEmotionalQualityValue = Random.Range(1, 11);
-        desiredPhysicalQualityValue = Random.Range(1, 11);
+        desiredEmotionalQualityValue = Random.Range(1, 5);
+        desiredPhysicalQualityValue = Random.Range(1, 5);
         Debug.Log($"{customerName} wants a drink with {chosenEmotionalQuality} value of {desiredEmotionalQualityValue} and {chosenPhysicalQuality} value of {desiredPhysicalQualityValue}.");
         // add here to pause the day timer in the GameManager
 

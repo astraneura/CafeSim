@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour
     private float dayTimer = 0f;
 
     //variables for managing the machines
-    [SerializeField] private List<GameObject> regularMachines;
-    [SerializeField] private List<GameObject> specialMachines;
+    public List<GameObject> regularMachines;
+    public List<GameObject> specialMachines;
 
     private void Awake()
     {
@@ -39,16 +39,27 @@ public class GameManager : MonoBehaviour
         dayTimerText = GameObject.Find("DayTimer").GetComponent<TextMeshProUGUI>();
         dayTimer = dayDuration;
 
-        foreach (var machine in specialMachines)
-        {
-            machine.SetActive(false);
-        }
-        foreach (var machine in regularMachines)
-        {
-            machine.SetActive(true);
-        }
-
         StartCoroutine(SpawnNewCustomerAfterDelay(1f));
+    }
+
+    void Start()
+    {
+        for (int i = 0; i < specialMachines.Count; i++)
+        {
+            specialMachines[i].SetActive(false);
+        }
+        for (int i = 0; i < regularMachines.Count; i++)
+        {
+            regularMachines[i].SetActive(true);
+        }
+        // foreach (var machine in specialMachines)
+        // {
+        //     machine.SetActive(false);
+        // }
+        // foreach (var machine in regularMachines)
+        // {
+        //     machine.SetActive(true);
+        // }
     }
 
     void Update()
@@ -88,29 +99,13 @@ public class GameManager : MonoBehaviour
         }
         int randomNumber = Random.Range(0, 100);
         Debug.Log(randomNumber);
-        if (randomNumber < 0) // 20% chance to spawn a confused customer, temporarily set to 0% for testing
+        if (randomNumber < 20) // 20% chance to spawn a confused customer
         {
             SpawnConfusedCustomer();
-            foreach (var machine in regularMachines)
-            {
-                machine.SetActive(false);
-            }
-            foreach (var machine in specialMachines)
-            {
-                machine.SetActive(true);
-            }
         }
         else
         {
             SpawnRegularCustomer();
-            foreach (var machine in regularMachines)
-            {
-                machine.SetActive(true);
-            }
-            foreach (var machine in specialMachines)
-            {
-                machine.SetActive(false);
-            }
         }
     }
 
@@ -142,6 +137,22 @@ public class GameManager : MonoBehaviour
 
     private void SpawnConfusedCustomer()
     {
+        for (int i = 0; i < specialMachines.Count; i++)
+        {
+            specialMachines[i].SetActive(true);
+        }
+        for (int i = 0; i < regularMachines.Count; i++)
+        {
+            regularMachines[i].SetActive(false);
+        }
+        // foreach (var machine in regularMachines)
+        // {
+        //     machine.SetActive(false);
+        // }
+        // foreach (var machine in specialMachines)
+        // {
+        //     machine.SetActive(true);
+        // }
         if (spawnPoints.Length == 0)
         {
             Debug.LogWarning("No spawn points assigned!");
@@ -158,6 +169,22 @@ public class GameManager : MonoBehaviour
 
     private void SpawnRegularCustomer()
     {
+        for (int i = 0; i < specialMachines.Count; i++)
+        {
+            specialMachines[i].SetActive(false);
+        }
+        for (int i = 0; i < regularMachines.Count; i++)
+        {
+            regularMachines[i].SetActive(true);
+        }
+        // foreach (var machine in specialMachines)
+        // {
+        //     machine.SetActive(false);
+        // }
+        // foreach (var machine in regularMachines)
+        // {
+        //     machine.SetActive(true);
+        // }
         if (spawnPoints.Length == 0)
         {
             Debug.LogWarning("No spawn points assigned!");
