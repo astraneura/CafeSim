@@ -18,6 +18,8 @@ public class OrderManager : MonoBehaviour
     public int totalOrdersFailed = 0;
     public float totalMoneyMade = 0;
 
+    public GameObject dataController;
+
     // variables for the UI
     [SerializeField] private TextMeshProUGUI orderStepText;
     [SerializeField] private Transform orderStepsContainer;
@@ -71,6 +73,7 @@ public class OrderManager : MonoBehaviour
                 completedStepTransform.GetComponent<TextMeshProUGUI>().color = Color.green;
                 orderCompleted = true;
                 totalOrdersCompleted++;
+                dataController.GetComponent<UserProfileData>().ordersCompleted = totalOrdersCompleted;
                 return false;
             }
             else if (currentStepIndex >= currentOrderSteps.Count)

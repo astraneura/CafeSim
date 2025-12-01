@@ -156,6 +156,9 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
             if (OrderManager.Instance.currentCustomer == (ICustomer)this)
             {
                 OrderManager.Instance.orderCompleted = true;
+                OrderManager.Instance.totalOrdersCompleted++;
+                OrderManager.Instance.dataController.GetComponent<UserProfileData>().ordersCompleted 
+                = OrderManager.Instance.totalOrdersCompleted;
                 Debug.Log($"{customerName}'s order is complete!");
             }
             else

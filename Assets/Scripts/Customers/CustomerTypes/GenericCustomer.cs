@@ -70,9 +70,6 @@ public class GenericCustomer : MonoBehaviour, ICustomer
             patienceSlider.value = 1f;
         }
 
-        if (gameManager != null)
-            gameManager.OnCustomerOrderStarted();
-
         Debug.Log("Current order: " + string.Join(", ", currentRecipe.steps));
         return true;
     }
@@ -103,6 +100,8 @@ public class GenericCustomer : MonoBehaviour, ICustomer
         Debug.Log($"{customerName} ran out of patience and left!");
         OrderManager.Instance.ClearCurrentOrder();
         OrderManager.Instance.totalOrdersFailed++;
+        OrderManager.Instance.dataController.GetComponent<UserProfileData>().ordersFailed 
+        = OrderManager.Instance.totalOrdersFailed;
         Destroy(gameObject, 2f);
     }
 
@@ -117,8 +116,9 @@ public class GenericCustomer : MonoBehaviour, ICustomer
 
     public void CompleteOrder()
     {
-        if (currentRecipe != null)
+        if (currentRecipe != null && orderInProgress)
         {
+            orderInProgress = false;
             OrderManager.Instance.ClearCurrentOrder();
             Debug.Log("Adding money: " + currentRecipe.cost);
             FindAnyObjectByType<PlayerInteraction>().AddMoney(currentRecipe.cost);

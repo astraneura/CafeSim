@@ -6,6 +6,7 @@ public class ToppingsBox : MonoBehaviour
     private DrinkManager drinkManager;
     public GameObject toppingMenuUI; // Reference to the Topping Menu UI
     public MouseLook mouseLook;
+    public static bool ToppingsMenuOpen = false;
     void Start()
     {
         toppingMenuUI.SetActive(false);
@@ -15,14 +16,17 @@ public class ToppingsBox : MonoBehaviour
     public void OpenToppingMenu()
     {
         toppingMenuUI.SetActive(true);
+        ToppingsMenuOpen = true;
         Time.timeScale = 0f; // Pause the game
         mouseLook.enabled = false;
         Cursor.lockState = CursorLockMode.None;
+
     }
 
     public void CloseToppingMenu()
     {
         toppingMenuUI.SetActive(false);
+        ToppingsMenuOpen = false;
         Time.timeScale = 1f; // Resume the game
         mouseLook.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;

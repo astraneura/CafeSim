@@ -464,7 +464,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddBitterToDrink
         m_Mode: 1
@@ -597,7 +597,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddColdToDrink
         m_Mode: 1
@@ -1021,7 +1021,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddWarmToDrink
         m_Mode: 1
@@ -1154,7 +1154,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddThinToDrink
         m_Mode: 1
@@ -1287,7 +1287,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddBlessedToDrink
         m_Mode: 1
@@ -1557,7 +1557,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddNostalgicToDrink
         m_Mode: 1
@@ -1656,6 +1656,7 @@ MonoBehaviour:
   totalOrdersCompleted: 0
   totalOrdersFailed: 0
   totalMoneyMade: 0
+  dataController: {fileID: 1272573289}
   orderStepText: {fileID: 7399759649385469197, guid: ffcf394594b47aa429e20f594200fa4d, type: 3}
   orderStepsContainer: {fileID: 1116912483}
 --- !u!1 &233116384
@@ -2180,8 +2181,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190335
+  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2418,11 +2419,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1838104250}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100.5373, y: 50}
-  m_Pivot: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -62}
+  m_SizeDelta: {x: 450, y: 60}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &309825544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2470,12 +2471,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 30
+  m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
@@ -2714,7 +2715,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddSpicyToDrink
         m_Mode: 1
@@ -3315,7 +3316,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 150, y: 30}
+  m_SizeDelta: {x: 300, y: 60}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &463125756
 MonoBehaviour:
@@ -5013,7 +5014,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddHeavyToDrink
         m_Mode: 1
@@ -5491,9 +5492,9 @@ MonoBehaviour:
   - {fileID: 74891265}
   - {fileID: 1209607288}
   - {fileID: 118578384}
-  currentCustomers: 0
   spawnDelay: 10
-  dayDuration: 60
+  currentCustomers: 0
+  dayDuration: 120
   regularMachines:
   - {fileID: 1078174814}
   - {fileID: 1215034914}
@@ -5590,7 +5591,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddLightToDrink
         m_Mode: 1
@@ -6352,7 +6353,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddCreamyToDrink
         m_Mode: 1
@@ -6595,7 +6596,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddFreshToDrink
         m_Mode: 1
@@ -7686,7 +7687,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1188103108
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7860,6 +7861,93 @@ MonoBehaviour:
   spicyBlandBalance: 0
   blessedCursedBalance: 0
   balanceUI: {fileID: 817668571}
+--- !u!1 &1272573289
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1272573290}
+  - component: {fileID: 1272573294}
+  - component: {fileID: 1272573293}
+  - component: {fileID: 1272573292}
+  - component: {fileID: 1272573291}
+  m_Layer: 0
+  m_Name: DataController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1272573290
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272573289}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.93155, y: 0.4976, z: -2.03547}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1272573291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272573289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e591ae41a6aa6464e8320bb8a1a2feb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1272573292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272573289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c02f206760ce43c4eaf612710104fa54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1272573293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272573289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b4dfa723c97b54cad28a537575f293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1272573294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272573289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da2dcc52e28078242a3f4cb867793d1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moneyMade: 0
+  ordersCompleted: 0
+  ordersFailed: 0
+  timePlayed: 0
 --- !u!1 &1275422603
 GameObject:
   m_ObjectHideFlags: 0
@@ -8784,7 +8872,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddUpliftingToDrink
         m_Mode: 1
@@ -9025,7 +9113,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddCursedToDrink
         m_Mode: 1
@@ -9294,7 +9382,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddBlandToDrink
         m_Mode: 1
@@ -9910,7 +9998,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddCalmingToDrink
         m_Mode: 1
@@ -10566,7 +10654,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddDepressingToDrink
         m_Mode: 1
@@ -10836,7 +10924,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddEnergizedToDrink
         m_Mode: 1
@@ -10969,7 +11057,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: CloseToppingMenu
         m_Mode: 1
@@ -11773,8 +11861,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190335
+  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -12662,7 +12750,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2597005}
         m_TargetAssemblyTypeName: ToppingsBox, Assembly-CSharp
         m_MethodName: AddSweetToDrink
         m_Mode: 1
@@ -13162,8 +13250,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 41}
-  m_SizeDelta: {x: 1500, y: 250}
+  m_AnchoredPosition: {x: 0, y: 85}
+  m_SizeDelta: {x: 1000, y: 150}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1965472825
 MonoBehaviour:
@@ -13930,12 +14018,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2089009979}
   m_CullTransparentMesh: 1
+--- !u!1 &2142422270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2142422271}
+  - component: {fileID: 2142422272}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2142422271
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2142422270}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.93155, y: 0.4976, z: -2.03547}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2142422272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2142422270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f670da21e3824541aa3d7fb13b8c980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dc: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 410087041}
   - {fileID: 832575519}
+  - {fileID: 1272573290}
+  - {fileID: 2142422271}
   - {fileID: 999001192}
   - {fileID: 62355910}
   - {fileID: 1179336101}

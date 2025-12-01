@@ -2,36 +2,34 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-using Unity.VisualScripting;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
 public class GameManager : MonoBehaviour
 {
     // Singleton instance
     public static GameManager Instance;
 
-    //variables for spawning customers
+    [Header("Customer Spawning")]
     public GameObject customerPrefab;
     public GameObject confusedCustomerPrefab;
     public Transform[] spawnPoints;
-    private int nextSpawnIndex = 0;
-    private bool isSpawning = false;
-    private bool spawnAllowed = true;
+    public float spawnDelay = 12f;
     public int currentCustomers = 0;
-    [SerializeField] private float spawnDelay;
 
-    // variables for tracking the day timer
-    private TextMeshProUGUI dayTimerText;
+    private int nextSpawnIndex = 0;
+    private bool spawnAllowed = true;
+
+
+    [Header("Day Timer")]
     public float dayDuration = 300f; // Duration of the day in seconds
-    private float dayTimer = 0f;
+    private TextMeshProUGUI dayTimerText;
+    private float dayTimer;
 
-    //variables for managing the machines
+    [Header("Machines")]
     public List<GameObject> regularMachines;
     public List<GameObject> specialMachines;
 
-    //ui elements
-        public TextMeshProUGUI qualityOrderText;
+    [Header("UI Elements")]
+    public TextMeshProUGUI qualityOrderText;
 
     private void Awake()
     {
@@ -50,120 +48,77 @@ public class GameManager : MonoBehaviour
         }
 
         qualityOrderText.text = "";
+
         dayTimerText = GameObject.Find("DayTimer").GetComponent<TextMeshProUGUI>();
         dayTimer = dayDuration;
+
         Cursor.lockState = CursorLockMode.Locked;
-        StartCoroutine(SpawnNewCustomerAfterDelay(1f));
+
+        SpawnNewCustomer();
+        StartCoroutine(SpawnLoop());
     }
 
-    void Start()
+    private IEnumerator SpawnLoop()
     {
-
+        while (true)
+        {
+            yield return new WaitForSeconds(spawnDelay);
+            if (spawnAllowed)
+            {
+                SpawnNewCustomer();
+            }
+        }
     }
 
     void Update()
     {
-
         UpdateDayTimer();
-        if (currentCustomers == spawnPoints.Length)
-        {
-            spawnAllowed = false;
-            StartCoroutine(AllowCatchUp());
-        }
     }
 
-    private IEnumerator SpawnNewCustomerAfterDelay(float delay)
-    {
-        isSpawning = true;
-        yield return new WaitForSeconds(delay);
-
-        SpawnNewCustomer();
-        isSpawning = false;
-    }
     private void SpawnNewCustomer()
     {
         if (spawnPoints.Length == 0)
+            return;
+
+        int attempts = 0;
+        bool foundSpot = false;
+
+        while(attempts < spawnPoints.Length)
         {
-            Debug.LogWarning("No spawn points assigned!");
+            Transform point = spawnPoints[nextSpawnIndex];
+            if(!Physics.CheckSphere(point.position, 0.1f))
+            {
+                foundSpot = true;
+                break;
+            }
+            nextSpawnIndex = (nextSpawnIndex + 1) % spawnPoints.Length;
+            attempts++;
+        }
+
+        if(!foundSpot)
+        {
+            Debug.Log("No available spawn points found.");
             return;
         }
-        if (!spawnAllowed)
+
+        int roll = Random.Range(0, 100);
+        Transform spawnPoint = spawnPoints[nextSpawnIndex];
+        if (roll < 20) // 20% chance to spawn a confused customer
         {
-            Debug.Log("Spawning is currently not allowed.");
-            return;
-        }
-        if (currentCustomers >= spawnPoints.Length)
-        {
-            Debug.Log("Max customers reached. Pausing spawn cycle.");
-            return;
-        }
-        int randomNumber = Random.Range(0, 100);
-        Debug.Log(randomNumber);
-        if (randomNumber < 20) // 20% chance to spawn a confused customer
-        {
-            SpawnConfusedCustomer();
+            Instantiate(confusedCustomerPrefab, spawnPoint.position, spawnPoint.rotation);
         }
         else
         {
-            SpawnRegularCustomer();
+            Instantiate(customerPrefab, spawnPoint.position, spawnPoint.rotation);
         }
-    }
 
-    public void OnCustomerOrderStarted()
-    {
-        if (!isSpawning)
-            StartCoroutine(SpawnNewCustomerAfterDelay(spawnDelay));
+        currentCustomers++;
+        nextSpawnIndex = (nextSpawnIndex + 1) % spawnPoints.Length;
     }
 
     public void OnCustomerOrderCompleted()
     {
         currentCustomers = Mathf.Max(0, currentCustomers - 1);
-        if (currentCustomers < spawnPoints.Length)
-        {
-            spawnAllowed = true;
-            SpawnNewCustomer();
-        }
-    }
-
-    private IEnumerator AllowCatchUp()
-    {
-        yield return new WaitForSeconds(15f);
-        if (currentCustomers < spawnPoints.Length)
-        {
-            spawnAllowed = true;
-            SpawnNewCustomer();
-        }
-    }
-
-    private void SpawnConfusedCustomer()
-    {
-        if (spawnPoints.Length == 0)
-        {
-            Debug.LogWarning("No spawn points assigned!");
-            return;
-        }
-        Transform spawnPoint = spawnPoints[nextSpawnIndex];
-        Instantiate(confusedCustomerPrefab, spawnPoint.position, spawnPoint.rotation);
-        currentCustomers++;
-        // Cycle to the next spawn point
-        nextSpawnIndex = (nextSpawnIndex + 1) % spawnPoints.Length;
-        StartCoroutine(SpawnNewCustomerAfterDelay(spawnDelay)); // remove later - allow more customers for testing
-        //spawnAllowed = false; // set spawning to false to allow player time to create custom drink
-    }
-
-    private void SpawnRegularCustomer()
-    {
-        if (spawnPoints.Length == 0)
-        {
-            Debug.LogWarning("No spawn points assigned!");
-            return;
-        }
-        Transform spawnPoint = spawnPoints[nextSpawnIndex];
-        Instantiate(customerPrefab, spawnPoint.position, spawnPoint.rotation);
-        currentCustomers++;
-        // Cycle to the next spawn point
-        nextSpawnIndex = (nextSpawnIndex + 1) % spawnPoints.Length;
-        StartCoroutine(SpawnNewCustomerAfterDelay(spawnDelay)); // continue spawning regular customers
     }
 
     private void UpdateDayTimer()

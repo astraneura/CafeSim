@@ -16,7 +16,6 @@ public class PlayerInteraction : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI moneyText;
     private ICustomer currentCustomer;
-
     private void Start()
     {
         DrinkManager.Instance = FindAnyObjectByType<DrinkManager>();
@@ -132,6 +131,10 @@ public class PlayerInteraction : MonoBehaviour
     {
         // This can be used for dialogue continuation if needed
         //use for closing the dialogue box after speaking for now
+        if (currentCustomer == null)
+            return;
+        if (ToppingsBox.ToppingsMenuOpen)
+            return;
         currentCustomer.CloseDialogue();
 
     }
@@ -140,6 +143,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         moneyMade += amount;
         OrderManager.Instance.totalMoneyMade = moneyMade;
+        OrderManager.Instance.dataController.GetComponent<UserProfileData>().moneyMade = moneyMade;
         if (moneyText != null)
         {
             moneyText.text = "Money: $" + moneyMade.ToString("F2");

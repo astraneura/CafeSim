@@ -40,12 +40,14 @@ public class PlayerPause : MonoBehaviour
         if (Time.timeScale == 1)
         {
             Time.timeScale = 0; // Pause the game
+            Cursor.lockState = CursorLockMode.None;
             pauseMenuUI.SetActive(true); 
             mouseLook.enabled = false;
         }
         else
         {
             Time.timeScale = 1; // Resume the game
+            Cursor.lockState = CursorLockMode.Locked;
             pauseMenuUI.SetActive(false);
             mouseLook.enabled = true;
         }
