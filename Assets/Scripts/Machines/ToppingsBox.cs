@@ -1,14 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using System.Collections;
 
 public class ToppingsBox : MonoBehaviour
 {
     private DrinkManager drinkManager;
     public GameObject toppingMenuUI; // Reference to the Topping Menu UI
     public MouseLook mouseLook;
-    public GameObject firstButton;
     public static bool ToppingsMenuOpen = false;
     void Start()
     {
@@ -24,15 +21,6 @@ public class ToppingsBox : MonoBehaviour
         mouseLook.enabled = false;
         Cursor.lockState = CursorLockMode.None;
 
-        // Set the first button as the selected UI element
-        EventSystem.current.SetSelectedGameObject(null);
-        StartCoroutine(SelectNextFrame());
-    }
-
-    private IEnumerator SelectNextFrame()
-    {
-        yield return null; // Wait for the next frame
-        EventSystem.current.SetSelectedGameObject(firstButton);
     }
 
     public void CloseToppingMenu()
@@ -42,8 +30,6 @@ public class ToppingsBox : MonoBehaviour
         Time.timeScale = 1f; // Resume the game
         mouseLook.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
-
-        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void AddEnergizedToDrink()
