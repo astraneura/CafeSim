@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using Unity.VisualScripting;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,6 +30,9 @@ public class GameManager : MonoBehaviour
     public List<GameObject> regularMachines;
     public List<GameObject> specialMachines;
 
+    //ui elements
+        public TextMeshProUGUI qualityOrderText;
+
     private void Awake()
     {
         if (Instance == null)
@@ -36,14 +40,6 @@ public class GameManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        dayTimerText = GameObject.Find("DayTimer").GetComponent<TextMeshProUGUI>();
-        dayTimer = dayDuration;
-
-        StartCoroutine(SpawnNewCustomerAfterDelay(1f));
-    }
-
-    void Start()
-    {
         for (int i = 0; i < specialMachines.Count; i++)
         {
             specialMachines[i].SetActive(false);
@@ -52,18 +48,22 @@ public class GameManager : MonoBehaviour
         {
             regularMachines[i].SetActive(true);
         }
-        // foreach (var machine in specialMachines)
-        // {
-        //     machine.SetActive(false);
-        // }
-        // foreach (var machine in regularMachines)
-        // {
-        //     machine.SetActive(true);
-        // }
+
+        qualityOrderText.text = "";
+        dayTimerText = GameObject.Find("DayTimer").GetComponent<TextMeshProUGUI>();
+        dayTimer = dayDuration;
+        Cursor.lockState = CursorLockMode.Locked;
+        StartCoroutine(SpawnNewCustomerAfterDelay(1f));
+    }
+
+    void Start()
+    {
+
     }
 
     void Update()
     {
+
         UpdateDayTimer();
         if (currentCustomers == spawnPoints.Length)
         {
@@ -137,22 +137,6 @@ public class GameManager : MonoBehaviour
 
     private void SpawnConfusedCustomer()
     {
-        for (int i = 0; i < specialMachines.Count; i++)
-        {
-            specialMachines[i].SetActive(true);
-        }
-        for (int i = 0; i < regularMachines.Count; i++)
-        {
-            regularMachines[i].SetActive(false);
-        }
-        // foreach (var machine in regularMachines)
-        // {
-        //     machine.SetActive(false);
-        // }
-        // foreach (var machine in specialMachines)
-        // {
-        //     machine.SetActive(true);
-        // }
         if (spawnPoints.Length == 0)
         {
             Debug.LogWarning("No spawn points assigned!");
@@ -169,22 +153,6 @@ public class GameManager : MonoBehaviour
 
     private void SpawnRegularCustomer()
     {
-        for (int i = 0; i < specialMachines.Count; i++)
-        {
-            specialMachines[i].SetActive(false);
-        }
-        for (int i = 0; i < regularMachines.Count; i++)
-        {
-            regularMachines[i].SetActive(true);
-        }
-        // foreach (var machine in specialMachines)
-        // {
-        //     machine.SetActive(false);
-        // }
-        // foreach (var machine in regularMachines)
-        // {
-        //     machine.SetActive(true);
-        // }
         if (spawnPoints.Length == 0)
         {
             Debug.LogWarning("No spawn points assigned!");
@@ -218,5 +186,28 @@ public class GameManager : MonoBehaviour
     private void EndDay()
     {
         SceneManager.LoadScene("End");
+    }
+
+    public void EnableQualityMachines()
+    {
+        foreach (var m in specialMachines)
+        {
+            m.SetActive(true);
+        }
+        foreach (var m in regularMachines)
+        {
+            m.SetActive(false);
+        }
+    }
+    public void EnableRegularMachines()
+    {
+        foreach (var m in specialMachines)
+        {
+            m.SetActive(false);
+        }
+        foreach (var m in regularMachines)
+        {
+            m.SetActive(true);
+        }
     }
 }

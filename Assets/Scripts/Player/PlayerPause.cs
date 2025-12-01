@@ -54,6 +54,7 @@ public class PlayerPause : MonoBehaviour
     public void OnResume()
     {
         Time.timeScale = 1; // Resume the game
+        Cursor.lockState = CursorLockMode.Locked;
         pauseMenuUI.SetActive(false);
         mouseLook.enabled = true;
     }

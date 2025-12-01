@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 public class GenericCustomer : MonoBehaviour, ICustomer
 {
     //manager references
@@ -22,12 +24,13 @@ public class GenericCustomer : MonoBehaviour, ICustomer
     public DrinkRecipe currentRecipe;
     public List<OrderStep> currentOrder = new List<OrderStep>();
 
+    // UI Elements
     public Slider patienceSlider;
 
     void Awake()
     {
         customerName = GetCustomerName();
-        patienceSlider.gameObject.SetActive(false);    
+        patienceSlider.gameObject.SetActive(false);
     }
 
     void Update()
@@ -46,6 +49,7 @@ public class GenericCustomer : MonoBehaviour, ICustomer
 
     public bool GenerateOrder()
     {
+        GameManager.Instance.EnableRegularMachines();
         if (drinkRecipeDatabase == null || drinkRecipeDatabase.allRecipes.Count == 0)
             return false;
 
@@ -120,5 +124,18 @@ public class GenericCustomer : MonoBehaviour, ICustomer
             FindAnyObjectByType<PlayerInteraction>().AddMoney(currentRecipe.cost);
             Destroy(gameObject);
         }
+    }
+
+    public void Speak()
+    {
+        DialogueManager.GetInstance().dialoguePanel.SetActive(true);
+        DialogueManager.GetInstance().dialogueText.text = $"Hello, I am {customerName}. I would like to order a {currentRecipe.drinkName}.";
+        DialogueManager.GetInstance().StartCoroutine(DialogueManager.GetInstance().DialogueBoxTimeout(5f));
+    }
+
+    public void CloseDialogue()
+    {
+        DialogueManager.GetInstance().dialogueText.text = "";
+        DialogueManager.GetInstance().dialoguePanel.SetActive(false);
     }
 }

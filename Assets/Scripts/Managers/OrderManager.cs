@@ -10,7 +10,7 @@ public class OrderManager : MonoBehaviour
 
     private PlayerInteraction pInteract;
     // variables to track the current order and its steps
-    private Order currentOrder;
+    public Order currentOrder;
     public List<OrderStep> currentOrderSteps = new List<OrderStep>();
     private int currentStepIndex = 0;
     public bool orderCompleted;
@@ -50,6 +50,7 @@ public class OrderManager : MonoBehaviour
             currentOrderSteps.Add(new OrderStep { stepName = step });
             var stepTextObj = Instantiate(orderStepText, orderStepsContainer);
             stepTextObj.text = step;
+            stepTextObj.fontSize = 24;
         }
 
     }
@@ -119,5 +120,13 @@ public class OrderManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+    }
+
+    public void SetConfusedCustomer(ICustomer customer)
+    {
+        currentCustomer = customer;
+        currentOrder = null;
+        currentOrderSteps.Clear();
+        orderCompleted = false;
     }
 }

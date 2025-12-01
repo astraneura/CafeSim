@@ -6,5 +6,7 @@ public interface ICustomer
     void CompleteOrder();
     void ResetOrderProgress();
     void OnOrderTimeout();
+    void Speak();
+    void CloseDialogue();
 
 }

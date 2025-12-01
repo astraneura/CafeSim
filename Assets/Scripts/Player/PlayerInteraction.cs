@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.Rendering;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    [SerializeField] private InputActionReference interactAction;
+    public InputActionReference interactAction;
+    public InputActionReference continueAction;
 
     public bool canGenerateOrder = true;
 
     private float moneyMade = 0f;
 
     [SerializeField] private TextMeshProUGUI moneyText;
+    private ICustomer currentCustomer;
 
     private void Start()
     {
@@ -22,12 +25,16 @@ public class PlayerInteraction : MonoBehaviour
     {
         interactAction.action.performed += OnInteract;
         interactAction.action.Enable();
+        continueAction.action.performed += OnContinue;
+        continueAction.action.Enable();
     }
 
     private void OnDisable()
     {
         interactAction.action.performed -= OnInteract;
         interactAction.action.Disable();
+        continueAction.action.performed -= OnContinue;
+        continueAction.action.Disable();
     }
 
     private void OnInteract(InputAction.CallbackContext context)
@@ -64,19 +71,38 @@ public class PlayerInteraction : MonoBehaviour
 
                 if (OrderManager.Instance.orderCompleted && customer != null)
                 {
-                    customer.CompleteOrder();
-                    Debug.Log("Customer order completed.");
-                    OrderManager.Instance.orderCompleted = false;
-                    GameManager.Instance.OnCustomerOrderCompleted();   
-                    canGenerateOrder = true; // Allow generating a new order
+                    if (OrderManager.Instance.currentCustomer == customer)
+                    {
+                        customer.CompleteOrder();
+                        Debug.Log("Customer order completed.");
+                        OrderManager.Instance.orderCompleted = false;
+                        GameManager.Instance.OnCustomerOrderCompleted();
+                        canGenerateOrder = true; // Allow generating a new order
+                        currentCustomer = null;
+                    }
+                    else
+                    {
+                        Debug.Log("This is not the current customer to complete an order for.");
+                    }
                 }
                 else
                 if (customer != null)
                 {
-                    customer.GenerateOrder();
-                    canGenerateOrder = false; // limit to one active order at a time
-
+                    currentCustomer = customer;
+                    if (customer.GenerateOrder())
+                    {
+                        currentCustomer.Speak();
+                        canGenerateOrder = false; // limit to one active order at a time
+                    }
+                    else
+                    {
+                        Debug.Log("Failed to generate order for customer.");
+                    }
                 }
+            }
+            else if (hit.collider.CompareTag("ToppingsBox"))
+            {
+                hit.collider.GetComponent<ToppingsBox>().OpenToppingMenu();
             }
             else
             {
@@ -100,6 +126,14 @@ public class PlayerInteraction : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnContinue(InputAction.CallbackContext context)
+    {
+        // This can be used for dialogue continuation if needed
+        //use for closing the dialogue box after speaking for now
+        currentCustomer.CloseDialogue();
+
     }
 
     public void AddMoney(float amount)
