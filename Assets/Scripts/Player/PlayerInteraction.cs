@@ -3,32 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.Rendering;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    [SerializeField] private InputActionReference interactAction;
-    [SerializeField] private InputActionReference switchAction;
+    public InputActionReference interactAction;
+    public InputActionReference continueAction;
 
-    private bool canGenerateOrder = true;
+    public bool canGenerateOrder = true;
 
     private float moneyMade = 0f;
 
     [SerializeField] private TextMeshProUGUI moneyText;
-
+    private ICustomer currentCustomer;
     private void Start()
     {
         DrinkManager.Instance = FindAnyObjectByType<DrinkManager>();
-    } 
+    }
     private void OnEnable()
     {
         interactAction.action.performed += OnInteract;
         interactAction.action.Enable();
+        continueAction.action.performed += OnContinue;
+        continueAction.action.Enable();
     }
 
     private void OnDisable()
     {
         interactAction.action.performed -= OnInteract;
         interactAction.action.Disable();
+        continueAction.action.performed -= OnContinue;
+        continueAction.action.Disable();
     }
 
     private void OnInteract(InputAction.CallbackContext context)
@@ -46,49 +51,99 @@ public class PlayerInteraction : MonoBehaviour
                     Debug.Log("Cannot generate a new order until the current one is completed.");
                     return;
                 }
-                // Try to get the Customer component
-                Customer customer = hit.collider.GetComponent<Customer>();
+                // Loop through all MonoBehaviours on the hit object to find one that implements ICustomer
+                ICustomer customer = null;
+                foreach (var mb in hit.collider.GetComponents<MonoBehaviour>())
+                {
+                    if (mb is ICustomer)
+                    {
+                        customer = (ICustomer)mb;
+                        break;
+                    }
+                }
+
+                if (customer == null)
+                {
+                    Debug.LogError("Hit object tagged 'Customer' but no ICustomer found.");
+                    return;
+                }
+
                 if (OrderManager.Instance.orderCompleted && customer != null)
                 {
-                    customer.CompleteOrder();
-                    Destroy(customer.gameObject);
-                    Debug.Log("Customer order completed and customer destroyed.");
-                    OrderManager.Instance.orderCompleted = false;
-                    canGenerateOrder = true; // Allow generating a new order
+                    if (OrderManager.Instance.currentCustomer == customer)
+                    {
+                        customer.CompleteOrder();
+                        Debug.Log("Customer order completed.");
+                        OrderManager.Instance.orderCompleted = false;
+                        GameManager.Instance.OnCustomerOrderCompleted();
+                        canGenerateOrder = true; // Allow generating a new order
+                        currentCustomer = null;
+                    }
+                    else
+                    {
+                        Debug.Log("This is not the current customer to complete an order for.");
+                    }
                 }
                 else
-                if (customer != null && customer.currentOrderNum < customer.maxOrderNum && canGenerateOrder)
+                if (customer != null)
                 {
-                    customer.currentOrderNum++;
-                    customer.GenerateOrder();
-                    Debug.Log("Generated order for customer.");
-                    canGenerateOrder = false; // limit to one active order at a time
-
+                    currentCustomer = customer;
+                    if (customer.GenerateOrder())
+                    {
+                        currentCustomer.Speak();
+                        canGenerateOrder = false; // limit to one active order at a time
+                    }
+                    else
+                    {
+                        Debug.Log("Failed to generate order for customer.");
+                    }
                 }
+            }
+            else if (hit.collider.CompareTag("ToppingsBox"))
+            {
+                hit.collider.GetComponent<ToppingsBox>().OpenToppingMenu();
             }
             else
             {
                 // Handle other interactions
-                IOrderStepSourceInterface stepSource = hit.collider.GetComponent<IOrderStepSourceInterface>();
-                if (stepSource != null)
+                IOrderStepSourceInterface machine = hit.collider.GetComponent<IOrderStepSourceInterface>();
+                if (machine != null)
                 {
-                    string stepName = stepSource.GetOrderStepName();
-                    Debug.Log($"Attempting step: {stepName}");
-                    Ingredient machineIngredient = stepSource.GetIngredient();
-                    if (machineIngredient != null)
+                    ICustomer activeCustomer = OrderManager.Instance.currentCustomer;
+                    if (activeCustomer == null)
                     {
-                        DrinkManager.Instance.CalculateEmotionalValue(machineIngredient);
-                        DrinkManager.Instance.CalculatePhysicalValue(machineIngredient);
+                        Debug.Log("No active customer to serve.");
+                        return;
                     }
-                    OrderManager.Instance.AttemptStep(stepName);
+                    machine.Interact(activeCustomer);
+                    // Ingredient machineIngredient = machine.GetIngredient();
+                    // if (machineIngredient != null)
+                    // {
+                    //     DrinkManager.Instance.CalculateEmotionalValue(machineIngredient);
+                    //     DrinkManager.Instance.CalculatePhysicalValue(machineIngredient);
+                    // }
                 }
             }
         }
     }
 
+    private void OnContinue(InputAction.CallbackContext context)
+    {
+        // This can be used for dialogue continuation if needed
+        //use for closing the dialogue box after speaking for now
+        if (currentCustomer == null)
+            return;
+        if (ToppingsBox.ToppingsMenuOpen)
+            return;
+        currentCustomer.CloseDialogue();
+
+    }
+
     public void AddMoney(float amount)
     {
         moneyMade += amount;
+        OrderManager.Instance.totalMoneyMade = moneyMade;
+        OrderManager.Instance.dataController.GetComponent<UserProfileData>().moneyMade = moneyMade;
         if (moneyText != null)
         {
             moneyText.text = "Money: $" + moneyMade.ToString("F2");

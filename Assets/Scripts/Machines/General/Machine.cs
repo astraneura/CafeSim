@@ -9,7 +9,7 @@ public class Machine : MonoBehaviour
 
     private float workTimer;
     private bool isWorking;
-    private Customer currentCustomer;
+    private ICustomer currentCustomer;
     private Slider progressBar;
 
     void Start()

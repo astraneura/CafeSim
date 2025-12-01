@@ -3,14 +3,14 @@ using TMPro;
 
 public class MilkMachineUI : MonoBehaviour
 {
-    private MilkMachine milkMachine;
+    [SerializeField] private MilkMachine milkMachine;
+    [SerializeField] private SpecialMilk specialMilk;
     public TextMeshProUGUI machineNameTextUI;
     void Start()
     {
         machineNameTextUI = GetComponentInChildren<TextMeshProUGUI>();
 
-        milkMachine = GetComponentInParent<MilkMachine>();
-        if (milkMachine != null)
+        if (milkMachine != null || specialMilk != null)
         {
             machineNameTextUI.text = "Milk Machine"; //set name directly
         }

@@ -4,14 +4,14 @@ using TMPro;
 
 public class EspressoMachineUI : MonoBehaviour
 {
-    private EspressoMachine espressoMachine;
+   [SerializeField] private EspressoMachine espressoMachine;
+   [SerializeField] private SpecialEspresso specialEspresso;
     public TextMeshProUGUI machineNameTextUI;
     void Start()
     {
         machineNameTextUI = GetComponentInChildren<TextMeshProUGUI>();
 
-        espressoMachine = GetComponentInParent<EspressoMachine>();
-        if (espressoMachine != null)
+        if (espressoMachine != null || specialEspresso != null)
         {
             machineNameTextUI.text = "Espresso Machine"; //set name directly
         }
