@@ -1,13 +1,15 @@
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class PlayerPause : MonoBehaviour
 {
     [SerializeField] private InputActionReference pauseAction;
-    [SerializeField]private GameObject pauseMenuUI;
+    [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private GameObject instructionsUI;
     private MouseLook mouseLook;
+    public GameObject firstButton;
 
 
     private void Awake()
@@ -22,6 +24,8 @@ public class PlayerPause : MonoBehaviour
             Debug.LogWarning("PauseMenu or InstructionsUI GameObject not found in the scene.");
         }
         mouseLook = GetComponent<MouseLook>();
+        EventSystem.current.SetSelectedGameObject(null);
+        StartCoroutine(SelectNextFrame());
     }
     private void OnEnable()
     {
@@ -41,7 +45,7 @@ public class PlayerPause : MonoBehaviour
         {
             Time.timeScale = 0; // Pause the game
             Cursor.lockState = CursorLockMode.None;
-            pauseMenuUI.SetActive(true); 
+            pauseMenuUI.SetActive(true);
             mouseLook.enabled = false;
         }
         else
@@ -72,9 +76,15 @@ public class PlayerPause : MonoBehaviour
         instructionsUI.SetActive(false);
         pauseMenuUI.SetActive(true);
     }
-    
+
     public void OnQuit()
     {
         Application.Quit(); // Quit the application
+    }
+
+    private IEnumerator SelectNextFrame()
+    {
+        yield return null; // Wait for the next frame
+        EventSystem.current.SetSelectedGameObject(firstButton);
     }
 }
