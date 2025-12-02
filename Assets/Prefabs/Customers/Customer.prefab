@@ -185,10 +185,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
+  m_Radius: 0.82113427
+  m_Height: 2.544825
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: -0.09851217, y: 0.2724123, z: -0.017240494}
 --- !u!54 &5204833884505590434
 Rigidbody:
   m_ObjectHideFlags: 0

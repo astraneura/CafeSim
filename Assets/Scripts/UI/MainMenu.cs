@@ -9,10 +9,12 @@ public class MainMenu : MonoBehaviour
 {
     public GameObject intructionsUI;
     public GameObject mainMenuUI;
+    public GameObject controlsUI;
 
     void Awake()
     {
         intructionsUI.SetActive(false);
+        controlsUI.SetActive(false);
         mainMenuUI.SetActive(true);
     }
     public void PlayGame()
@@ -30,7 +32,14 @@ public class MainMenu : MonoBehaviour
     public void OnBack()
     {
         intructionsUI.SetActive(false);
+        controlsUI.SetActive(false);
         mainMenuUI.SetActive(true);
+    }
+
+    public void OnControls()
+    {
+        mainMenuUI.SetActive(false);
+        controlsUI.SetActive(true);
     }
 
     public void QuitGame()

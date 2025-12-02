@@ -159,11 +159,6 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
                 OrderManager.Instance.totalOrdersCompleted++;
                 OrderManager.Instance.dataController.GetComponent<UserProfileData>().ordersCompleted 
                 = OrderManager.Instance.totalOrdersCompleted;
-                Debug.Log($"{customerName}'s order is complete!");
-            }
-            else
-            {
-                Debug.Log($"{customerName}'s order is ready, but they are not the current customer.");
             }
         }
     }
@@ -180,7 +175,7 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
     public void Speak()
     {
         DialogueManager.GetInstance().dialoguePanel.SetActive(true);
-        DialogueManager.GetInstance().dialogueText.text = $"Hello, I am {customerName}. I would like a drink with {chosenEmotionalQuality} value of {desiredEmotionalQualityValue} and {chosenPhysicalQuality} value of {desiredPhysicalQualityValue}.";
+        DialogueManager.GetInstance().dialogueText.text = $"Hello, I am {customerName}. I would like a drink that's {chosenEmotionalQuality} and {chosenPhysicalQuality}.";
         DialogueManager.GetInstance().StartCoroutine(DialogueManager.GetInstance().DialogueBoxTimeout(5f));
     }
 

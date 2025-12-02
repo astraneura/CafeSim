@@ -23,7 +23,7 @@ public abstract class MouseLook : MonoBehaviour
 
         // Pitch: rotate camera (up/down)
         xRotation -= direction.y;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        xRotation = Mathf.Clamp(xRotation, -45f, 35f);
         if (playerCamera != null)
         {
             playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);

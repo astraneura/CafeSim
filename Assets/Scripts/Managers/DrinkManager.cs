@@ -123,6 +123,7 @@ public class DrinkManager : MonoBehaviour
         sweetBitterBalance = 0;
         spicyBlandBalance = 0;
         blessedCursedBalance = 0;
+        balanceUI.UpdateUI();
     }
 
 

@@ -102,6 +102,10 @@ public class PlayerInteraction : MonoBehaviour
             else if (hit.collider.CompareTag("ToppingsBox"))
             {
                 hit.collider.GetComponent<ToppingsBox>().OpenToppingMenu();
+            } else 
+            if (hit.collider.CompareTag("Trash"))
+            {
+                DrinkManager.Instance.ResetDrinkValues();
             }
             else
             {
