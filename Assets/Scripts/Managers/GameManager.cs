@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
 
         int roll = Random.Range(0, 100);
         Transform spawnPoint = spawnPoints[nextSpawnIndex];
-        if (roll < 20) // 20% chance to spawn a confused customer
+        if (roll < 100) // 20% chance to spawn a confused customer
         {
             Instantiate(confusedCustomerPrefab, spawnPoint.position, spawnPoint.rotation);
         }

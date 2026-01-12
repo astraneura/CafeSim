@@ -169,7 +169,7 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
         orderText.text = "";
         Debug.Log("Adding money: $20");
         FindAnyObjectByType<PlayerInteraction>().AddMoney(20f);
-        Destroy(gameObject, 2f);
+        Destroy(gameObject  );
     }
 
     public void Speak()
