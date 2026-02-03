@@ -10,6 +10,11 @@ public class GenericCustomer : MonoBehaviour, ICustomer
     private GameManager gameManager;
     private DrinkManager drinkManager;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private List<AudioClip> enterClips;
+    [SerializeField] private List<AudioClip> completeClips;
+    [SerializeField] private AudioClip speakingClip;
+
     //database references
     public CustomerNameDatabase nameDatabase; // Reference to the name database
     public DrinkRecipeDatabase drinkRecipeDatabase; // Reference to the drink recipe database
@@ -33,6 +38,11 @@ public class GenericCustomer : MonoBehaviour, ICustomer
         patienceSlider.gameObject.SetActive(false);
     }
 
+    void Start()
+    {
+        PlayEnterSound();
+    }
+
     void Update()
     {
         UpdateOrderTimer();
@@ -45,6 +55,26 @@ public class GenericCustomer : MonoBehaviour, ICustomer
             return nameDatabase.names[randomIndex];
         }
         return "Customer"; // Fallback name
+    }
+
+    void PlayEnterSound()
+    {
+        if (audioSource != null && enterClips.Count > 0)
+        {
+            int randomIndex = Random.Range(0, enterClips.Count);
+            audioSource.clip = enterClips[randomIndex];
+            audioSource.Play();
+        }
+    }
+
+    void PlayCompleteSound()
+    {
+        if (audioSource != null && completeClips.Count > 0)
+        {
+            int randomIndex = Random.Range(0, completeClips.Count);
+            audioSource.clip = completeClips[randomIndex];
+            audioSource.Play();
+        }
     }
 
     public bool GenerateOrder()
@@ -100,7 +130,7 @@ public class GenericCustomer : MonoBehaviour, ICustomer
         Debug.Log($"{customerName} ran out of patience and left!");
         OrderManager.Instance.ClearCurrentOrder();
         OrderManager.Instance.totalOrdersFailed++;
-        OrderManager.Instance.dataController.GetComponent<UserProfileData>().ordersFailed 
+        OrderManager.Instance.dataController.GetComponent<UserProfileData>().ordersFailed
         = OrderManager.Instance.totalOrdersFailed;
         Destroy(gameObject, 2f);
     }
@@ -122,15 +152,36 @@ public class GenericCustomer : MonoBehaviour, ICustomer
             OrderManager.Instance.ClearCurrentOrder();
             Debug.Log("Adding money: " + currentRecipe.cost);
             FindAnyObjectByType<PlayerInteraction>().AddMoney(currentRecipe.cost);
-            Destroy(gameObject);
+            PlayCompleteSound();
+            Destroy(gameObject, 0.3f);
         }
     }
 
     public void Speak()
     {
         DialogueManager.GetInstance().dialoguePanel.SetActive(true);
-        DialogueManager.GetInstance().dialogueText.text = $"Hello, I am {customerName}. I would like to order a {currentRecipe.drinkName}.";
-        DialogueManager.GetInstance().StartCoroutine(DialogueManager.GetInstance().DialogueBoxTimeout(5f));
+        if (audioSource != null && speakingClip != null)
+        {
+            audioSource.clip = speakingClip;
+            audioSource.volume = 0.25f;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+
+        DialogueManager.GetInstance().dialogueText.text =
+        $"Hello, I am {customerName}. I would like to order a {currentRecipe.drinkName}.";
+        DialogueManager.GetInstance().
+        StartCoroutine(DialogueManager.GetInstance().DialogueBoxTimeout(5f, this));
+    }
+
+    public void StopSpeaking()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.volume = 1f;
+            audioSource.loop = false;
+            audioSource.Stop();
+        }
     }
 
     public void CloseDialogue()

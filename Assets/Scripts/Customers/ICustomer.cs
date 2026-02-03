@@ -8,5 +8,6 @@ public interface ICustomer
     void OnOrderTimeout();
     void Speak();
     void CloseDialogue();
+    void StopSpeaking();
 
 }

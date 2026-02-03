@@ -33,10 +33,18 @@ public class DialogueManager : MonoBehaviour
         dialogueText.text = "";
     }
 
-    public IEnumerator DialogueBoxTimeout(float delay)
+    public IEnumerator DialogueBoxTimeout(float delay, ICustomer customer)
     {
         yield return new WaitForSeconds(delay);
+
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+
+        if (customer != null)
+        {
+            customer.StopSpeaking();
+        }
     }
+
+
 }

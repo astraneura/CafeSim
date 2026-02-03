@@ -31,6 +31,11 @@ public class GameManager : MonoBehaviour
     [Header("UI Elements")]
     public TextMeshProUGUI qualityOrderText;
 
+    [Header("Audio")]
+    public AudioSource backgroundMusicSource;
+    public AudioClip backgroundMusicClip;
+    private bool pitchIncreased = false;
+
     private void Awake()
     {
         if (Instance == null)
@@ -47,9 +52,13 @@ public class GameManager : MonoBehaviour
             regularMachines[i].SetActive(true);
         }
 
+
         qualityOrderText.text = "";
 
         dayTimerText = GameObject.Find("DayTimer").GetComponent<TextMeshProUGUI>();
+        backgroundMusicSource = GetComponent<AudioSource>();
+        backgroundMusicSource.clip = backgroundMusicClip;
+        backgroundMusicSource.Play();
         dayTimer = dayDuration;
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -73,6 +82,12 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         UpdateDayTimer();
+
+        if (dayTimer <= 30f && !pitchIncreased)
+        {
+            IncreaseAudioSourcePitch();
+            pitchIncreased = true;
+        }
     }
 
     private void SpawnNewCustomer()
@@ -103,7 +118,7 @@ public class GameManager : MonoBehaviour
 
         int roll = Random.Range(0, 100);
         Transform spawnPoint = spawnPoints[nextSpawnIndex];
-        if (roll < 100) // 20% chance to spawn a confused customer
+        if (roll < 20) // 20% chance to spawn a confused customer
         {
             Instantiate(confusedCustomerPrefab, spawnPoint.position, spawnPoint.rotation);
         }
@@ -135,6 +150,14 @@ public class GameManager : MonoBehaviour
             dayTimer = 0;
             dayTimerText.text = "00:00";
             EndDay();
+        }
+    }
+
+    private void IncreaseAudioSourcePitch()
+    {
+        if (backgroundMusicSource != null)
+        {
+            backgroundMusicSource.pitch += 0.3f;
         }
     }
 

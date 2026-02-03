@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,11 +14,16 @@ public class MilkMachine : MonoBehaviour, IOrderStepSourceInterface
 
     [SerializeField] private Ingredient milk;
 
+    public AudioSource audioSource;
+     public List<AudioClip> workClips;
+    bool isAudioPlaying = false;
+
     void Start()
     {
         progressBar = GetComponentInChildren<Slider>();
         progressBar.gameObject.SetActive(false);
         drinkManager = FindAnyObjectByType<DrinkManager>();
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -51,6 +57,13 @@ public class MilkMachine : MonoBehaviour, IOrderStepSourceInterface
     {
         isWorking = true;
         workTimer = workDuration;
+        if (!isAudioPlaying)
+        {
+            int randomIndex = Random.Range(0, workClips.Count);
+            audioSource.clip = workClips[randomIndex];
+            audioSource.Play();
+            isAudioPlaying = true;
+        }
         if (progressBar != null)
         {
             progressBar.gameObject.SetActive(true);
@@ -61,6 +74,11 @@ public class MilkMachine : MonoBehaviour, IOrderStepSourceInterface
     private void CompleteWork()
     {
         isWorking = false;
+        if (isAudioPlaying)
+        {
+            audioSource.Stop();
+            isAudioPlaying = false;
+        }
         if (progressBar != null)
         {
             progressBar.gameObject.SetActive(false);

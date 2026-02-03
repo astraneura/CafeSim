@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem.Interactions;
 using TMPro;
+using Unity.VisualScripting;
 
 public class ConfusedCustomer : MonoBehaviour, ICustomer
 {
@@ -8,6 +9,8 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
     [SerializeField] private CustomerNameDatabase nameDatabase;
     public string CustomerName => customerName;
     public string customerName;
+
+    AudioSource audioSource;
 
     // variables for random order qualities generation
     private Qualities chosenQualities;
@@ -157,7 +160,7 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
             {
                 OrderManager.Instance.orderCompleted = true;
                 OrderManager.Instance.totalOrdersCompleted++;
-                OrderManager.Instance.dataController.GetComponent<UserProfileData>().ordersCompleted 
+                OrderManager.Instance.dataController.GetComponent<UserProfileData>().ordersCompleted
                 = OrderManager.Instance.totalOrdersCompleted;
             }
         }
@@ -169,16 +172,25 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
         orderText.text = "";
         Debug.Log("Adding money: $20");
         FindAnyObjectByType<PlayerInteraction>().AddMoney(20f);
-        Destroy(gameObject  );
+        Destroy(gameObject);
     }
 
     public void Speak()
     {
         DialogueManager.GetInstance().dialoguePanel.SetActive(true);
         DialogueManager.GetInstance().dialogueText.text = $"Hello, I am {customerName}. I would like a drink that's {chosenEmotionalQuality} and {chosenPhysicalQuality}.";
-        DialogueManager.GetInstance().StartCoroutine(DialogueManager.GetInstance().DialogueBoxTimeout(5f));
+        DialogueManager.GetInstance().StartCoroutine(DialogueManager.GetInstance().DialogueBoxTimeout(5f, this));
     }
 
+    public void StopSpeaking()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.volume = 1f;
+            audioSource.loop = false;
+            audioSource.Stop();
+        }
+    }
     public void CloseDialogue()
     {
         DialogueManager.GetInstance().dialogueText.text = "";

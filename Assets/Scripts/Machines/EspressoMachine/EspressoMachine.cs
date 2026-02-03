@@ -13,13 +13,16 @@ public class EspressoMachine : MonoBehaviour, IOrderStepSourceInterface
 
     public Ingredient espresso;
 
+    AudioSource audioSource;
+    bool isAudioPlaying = false;
+
     void Start()
     {
         progressBar = GetComponentInChildren<Slider>();
         progressBar.gameObject.SetActive(false);
         drinkManager = FindAnyObjectByType<DrinkManager>();
+        audioSource = GetComponent<AudioSource>();
     }
-
 
     void Update()
     {
@@ -51,6 +54,11 @@ public class EspressoMachine : MonoBehaviour, IOrderStepSourceInterface
     {
         isWorking = true;
         workTimer = workDuration;
+        if (!isAudioPlaying)
+        {
+            audioSource.Play();
+            isAudioPlaying = true;
+        }
         if (progressBar != null)
         {
             progressBar.gameObject.SetActive(true);
@@ -61,6 +69,11 @@ public class EspressoMachine : MonoBehaviour, IOrderStepSourceInterface
     private void CompleteWork()
     {
         isWorking = false;
+        if (isAudioPlaying)
+        {
+            audioSource.Stop();
+            isAudioPlaying = false;
+        }
         if (progressBar != null)
         {
             progressBar.gameObject.SetActive(false);

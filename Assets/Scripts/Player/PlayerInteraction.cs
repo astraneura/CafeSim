@@ -140,7 +140,6 @@ public class PlayerInteraction : MonoBehaviour
         if (ToppingsBox.ToppingsMenuOpen)
             return;
         currentCustomer.CloseDialogue();
-
     }
 
     public void AddMoney(float amount)
