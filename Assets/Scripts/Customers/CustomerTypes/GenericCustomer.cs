@@ -26,6 +26,8 @@ public class GenericCustomer : MonoBehaviour, ICustomer
     protected float orderTimer;
     protected bool orderInProgress = false;
 
+    [SerializeField] private TextAsset dialogueInk;
+
     public DrinkRecipe currentRecipe;
     public List<OrderStep> currentOrder = new List<OrderStep>();
 
@@ -159,19 +161,18 @@ public class GenericCustomer : MonoBehaviour, ICustomer
 
     public void Speak()
     {
-        DialogueManager.GetInstance().dialoguePanel.SetActive(true);
-        if (audioSource != null && speakingClip != null)
-        {
-            audioSource.clip = speakingClip;
-            audioSource.volume = 0.25f;
-            audioSource.loop = true;
-            audioSource.Play();
-        }
+        audioSource.clip = speakingClip;
+        audioSource.volume = 0.25f;
+        audioSource.loop = true;
+        audioSource.Play();
 
-        DialogueManager.GetInstance().dialogueText.text =
-        $"Hello, I am {customerName}. I would like to order a {currentRecipe.drinkName}.";
-        DialogueManager.GetInstance().
-        StartCoroutine(DialogueManager.GetInstance().DialogueBoxTimeout(5f, this));
+        DialogueManager.instance.StartDialogue(
+            dialogueInk, this, story =>
+            {
+                story.variablesState["customerName"] = customerName;
+                story.variablesState["drinkName"]  = currentRecipe.drinkName;
+            }
+        );
     }
 
     public void StopSpeaking()

@@ -25,6 +25,8 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
 
     private TextMeshProUGUI orderText;
 
+    [SerializeField] private TextAsset dialogueInk;
+
 
     void Awake()
     {
@@ -177,9 +179,16 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
 
     public void Speak()
     {
-        DialogueManager.GetInstance().dialoguePanel.SetActive(true);
-        DialogueManager.GetInstance().dialogueText.text = $"Hello, I am {customerName}. I would like a drink that's {chosenEmotionalQuality} and {chosenPhysicalQuality}.";
-        DialogueManager.GetInstance().StartCoroutine(DialogueManager.GetInstance().DialogueBoxTimeout(5f, this));
+        DialogueManager.instance.StartDialogue(
+            dialogueInk,
+            this,
+            story =>
+            {
+                story.variablesState["customerName"] = customerName;
+                story.variablesState["emotionalQuality"] = chosenEmotionalQuality;
+                story.variablesState["physicalQuality"] = chosenPhysicalQuality;
+            }
+        );
     }
 
     public void StopSpeaking()

@@ -258,6 +258,7 @@ MonoBehaviour:
   drinkRecipeDatabase: {fileID: 11400000, guid: 884f5d38a4ac2ce4d85d5ba125b06efa, type: 2}
   customerName: 
   orderTimeLimit: 30
+  dialogueInk: {fileID: 4900000, guid: 1fdadca5e3f74e74eb070def786dff17, type: 3}
   currentRecipe: {fileID: 0}
   currentOrder: []
   patienceSlider: {fileID: 5475958099162858192}

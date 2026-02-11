@@ -168,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameDatabase: {fileID: 11400000, guid: f16503ee62d5687449d7921844186170, type: 2}
   customerName: 
+  dialogueInk: {fileID: 4900000, guid: 3d2b58ce12cb331438488bd45f0b51ee, type: 3}
 --- !u!1 &3585129868430930304
 GameObject:
   m_ObjectHideFlags: 0

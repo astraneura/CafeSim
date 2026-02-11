@@ -14,12 +14,23 @@ public class PlayerInteraction : MonoBehaviour
 
     private float moneyMade = 0f;
 
+    //interaction UI
+    [SerializeField] private GameObject talkIcon;
+    [SerializeField] private GameObject interactIcon;
+    [SerializeField] private float interactDistance = 3f;
+
     [SerializeField] private TextMeshProUGUI moneyText;
     private ICustomer currentCustomer;
     private void Start()
     {
         DrinkManager.Instance = FindAnyObjectByType<DrinkManager>();
     }
+
+    private void Update()
+    {
+        updateInteractionUI();
+    }
+
     private void OnEnable()
     {
         interactAction.action.performed += OnInteract;
@@ -139,7 +150,7 @@ public class PlayerInteraction : MonoBehaviour
             return;
         if (ToppingsBox.ToppingsMenuOpen)
             return;
-        currentCustomer.CloseDialogue();
+        DialogueManager.GetInstance().ContinueStory();
     }
 
     public void AddMoney(float amount)
@@ -153,4 +164,41 @@ public class PlayerInteraction : MonoBehaviour
         }
         Debug.Log("Total Money Made: " + moneyMade);
     }
+
+    private void updateInteractionUI()
+    {
+        talkIcon.SetActive(false);
+        interactIcon.SetActive(false);
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        RaycastHit hit;
+
+        if (!Physics.Raycast(ray, out hit, interactDistance))
+            return;
+
+        if (hit.collider.CompareTag("Customer"))
+        {
+            ICustomer customer = hit.collider.GetComponent<ICustomer>();
+            if (customer == null)
+                return;
+            
+            if(!canGenerateOrder && OrderManager.Instance.currentCustomer != customer)
+                return;
+
+            if(OrderManager.Instance.orderCompleted
+                && OrderManager.Instance.currentCustomer != customer)
+                return;
+            
+            talkIcon.SetActive(true);
+            return;
+        }
+        
+        if(hit.collider.GetComponent<IOrderStepSourceInterface>() != null ||
+           hit.collider.CompareTag("ToppingsBox") ||
+           hit.collider.CompareTag("Trash"))
+        {
+            if (OrderManager.Instance.currentCustomer != null)
+                interactIcon.SetActive(true);
+        }
+    }
+
 }
