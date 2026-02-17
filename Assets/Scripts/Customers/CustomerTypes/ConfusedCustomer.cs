@@ -1,7 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.Interactions;
 using TMPro;
-using Unity.VisualScripting;
 
 public class ConfusedCustomer : MonoBehaviour, ICustomer
 {
@@ -9,8 +10,6 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
     [SerializeField] private CustomerNameDatabase nameDatabase;
     public string CustomerName => customerName;
     public string customerName;
-
-    AudioSource audioSource;
 
     // variables for random order qualities generation
     private Qualities chosenQualities;
@@ -20,6 +19,11 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
     private int desiredPhysicalQualityValue;
     private int emotionalBalance;
     private int physicalBalance;
+
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private List<AudioClip> enterClips;
+    [SerializeField] private List<AudioClip> completeClips;
+    [SerializeField] private AudioClip speakingClip;
 
     private PlayerInteraction pInteract;
 
