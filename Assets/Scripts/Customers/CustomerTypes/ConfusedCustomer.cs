@@ -39,11 +39,36 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
         orderText = GameObject.Find("ValueOrder").GetComponent<TextMeshProUGUI>();
     }
 
+    void Start()
+    {
+        PlayEnterSound();
+    }
+
     void Update()
     {
         if (!pInteract.canGenerateOrder)
         {
             CheckOrderCompletion();
+        }
+    }
+
+    void PlayEnterSound()
+    {
+        if (audioSource != null && enterClips.Count > 0)
+        {
+            int randomIndex = Random.Range(0, enterClips.Count);
+            audioSource.clip = enterClips[randomIndex];
+            audioSource.Play();
+        }
+    }
+
+    void PlayCompleteSound()
+    {
+        if (audioSource != null && completeClips.Count > 0)
+        {
+            int randomIndex = Random.Range(0, completeClips.Count);
+            audioSource.clip = completeClips[randomIndex];
+            audioSource.Play();
         }
     }
 
@@ -178,11 +203,17 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
         orderText.text = "";
         Debug.Log("Adding money: $20");
         FindAnyObjectByType<PlayerInteraction>().AddMoney(20f);
+        PlayCompleteSound();
         Destroy(gameObject);
     }
 
     public void Speak()
     {
+        audioSource.clip = speakingClip;
+        audioSource.volume = 0.15f;
+        audioSource.loop = true;
+        audioSource.Play();
+
         DialogueManager.instance.StartDialogue(
             dialogueInk,
             this,
