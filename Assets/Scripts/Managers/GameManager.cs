@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [Header("Customer Spawning")]
     public GameObject customerPrefab;
     public GameObject confusedCustomerPrefab;
+    public GameObject celebrityCustomerPrefab;
     public Transform[] spawnPoints;
     public float spawnDelay = 12f;
     public int currentCustomers = 0;
@@ -121,6 +122,9 @@ public class GameManager : MonoBehaviour
         if (roll < 20) // 20% chance to spawn a confused customer
         {
             Instantiate(confusedCustomerPrefab, spawnPoint.position, spawnPoint.rotation);
+        } else if (roll > 80)
+        {
+            Instantiate(celebrityCustomerPrefab, spawnPoint.position, spawnPoint.rotation);
         }
         else
         {
@@ -159,6 +163,7 @@ public class GameManager : MonoBehaviour
         {
             backgroundMusicSource.pitch += 0.3f;
         }
+        FindAnyObjectByType<GameStateAtmosphere>().value = 100f;
     }
 
     private void EndDay()
