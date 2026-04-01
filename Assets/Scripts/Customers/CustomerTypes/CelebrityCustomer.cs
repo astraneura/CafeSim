@@ -22,7 +22,7 @@ public class CelebrityCustomer : MonoBehaviour, ICustomer
     public string CustomerName => customerName;
     public string customerName;
 
-    public float orderTimeLimit = 30f;
+    public float orderTimeLimit = 20f;
     protected float orderTimer;
     protected bool orderInProgress = false;
 

@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 5204833884505590434}
   - component: {fileID: 8220945815320837890}
   - component: {fileID: 2825765708910849636}
+  - component: {fileID: 2673553258450562923}
   m_Layer: 0
   m_Name: CelebrityCustomer
   m_TagString: Customer
@@ -144,7 +145,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 99a318006f2837f4ea0139d4f296d2e9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -326,6 +327,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2673553258450562923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081381114282108448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3c3eff4db96266419e6ad5b0e1daff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 2825765708910849636}
+  enterClips: []
+  completeClips: []
+  speakingClip: {fileID: 0}
+  nameDatabase: {fileID: 11400000, guid: f16503ee62d5687449d7921844186170, type: 2}
+  drinkRecipeDatabase: {fileID: 11400000, guid: 884f5d38a4ac2ce4d85d5ba125b06efa, type: 2}
+  customerName: 
+  orderTimeLimit: 30
+  dialogueInk: {fileID: 0}
+  currentRecipe: {fileID: 0}
+  currentOrder: []
+  patienceSlider: {fileID: 5475958099162858192}
 --- !u!1 &3585129868430930304
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,1 @@
+Hello I am a celebrity customer. My patience is shorter than a regular customer.

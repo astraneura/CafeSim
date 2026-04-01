@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public float spawnDelay = 12f;
     public int currentCustomers = 0;
 
+
     private int nextSpawnIndex = 0;
     private bool spawnAllowed = true;
 
@@ -102,7 +103,7 @@ public class GameManager : MonoBehaviour
         while(attempts < spawnPoints.Length)
         {
             Transform point = spawnPoints[nextSpawnIndex];
-            if(!Physics.CheckSphere(point.position, 0.1f))
+            if(!Physics.CheckSphere(point.position, 0.05f))
             {
                 foundSpot = true;
                 break;
@@ -119,16 +120,18 @@ public class GameManager : MonoBehaviour
 
         int roll = Random.Range(0, 100);
         Transform spawnPoint = spawnPoints[nextSpawnIndex];
+        Quaternion rotation = spawnPoint.rotation * Quaternion.Euler(0, 180, 0); // Rotate to face the player
+
         if (roll < 20) // 20% chance to spawn a confused customer
         {
-            Instantiate(confusedCustomerPrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(confusedCustomerPrefab, spawnPoint.position, rotation);
         } else if (roll > 80)
         {
-            Instantiate(celebrityCustomerPrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(celebrityCustomerPrefab, spawnPoint.position, rotation);
         }
         else
         {
-            Instantiate(customerPrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(customerPrefab, spawnPoint.position, rotation);
         }
 
         currentCustomers++;
