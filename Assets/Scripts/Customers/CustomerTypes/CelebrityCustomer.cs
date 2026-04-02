@@ -81,6 +81,8 @@ public class CelebrityCustomer : MonoBehaviour, ICustomer
 
     public bool GenerateOrder()
     {
+        if (orderInProgress)
+            return false; // Prevent generating a new order if one is already in progress
         GameManager.Instance.EnableRegularMachines();
         if (drinkRecipeDatabase == null || drinkRecipeDatabase.allRecipes.Count == 0)
             return false;
@@ -134,7 +136,7 @@ public class CelebrityCustomer : MonoBehaviour, ICustomer
         OrderManager.Instance.totalOrdersFailed++;
         OrderManager.Instance.dataController.GetComponent<UserProfileData>().ordersFailed
         = OrderManager.Instance.totalOrdersFailed;
-        Destroy(gameObject, 2f);
+        Destroy(gameObject);
     }
 
     public void ResetOrderProgress()

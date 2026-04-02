@@ -41,13 +41,6 @@ public class DrinkManager : MonoBehaviour
             balanceUI.UpdateUI();
             return energizedCalmingBalance;
         }
-        else if (ingredient.emotionalQuality == "Light" || ingredient.emotionalQuality == "Heavy")
-        {
-            lightHeavyBalance += ingredient.emotionalQualityValue;
-            Debug.Log("Calculated Light/Heavy Emotional Value: " + lightHeavyBalance);
-            balanceUI.UpdateUI();
-            return lightHeavyBalance;
-        }
         else if (ingredient.emotionalQuality == "Fresh" || ingredient.emotionalQuality == "Nostalgic")
         {
             freshNostalgicBalance += ingredient.emotionalQualityValue;
@@ -62,13 +55,6 @@ public class DrinkManager : MonoBehaviour
             balanceUI.UpdateUI();
             return upliftingDepressingBalance;
         }
-        else if (ingredient.emotionalQuality == "Warm" || ingredient.emotionalQuality == "Cold")
-        {
-            warmColdBalance += ingredient.emotionalQualityValue;
-            Debug.Log("Calculated Warm/Cold Emotional Value: " + warmColdBalance);
-            balanceUI.UpdateUI();
-            return warmColdBalance;
-        }
         return 0;
     }
 
@@ -76,15 +62,6 @@ public class DrinkManager : MonoBehaviour
     {
         if (ingredient == null)
             return 0;
-
-        if (ingredient.physicalQuality == "Creamy" || ingredient.physicalQuality == "Thin")
-        {
-            creamyThinBalance += ingredient.physicalQualityValue;
-            Debug.Log("Calculated Creamy/Thin Physical Value: " + creamyThinBalance);
-            balanceUI.UpdateUI();
-            return creamyThinBalance;
-        }
-        else
         if (ingredient.physicalQuality == "Sweet" || ingredient.physicalQuality == "Bitter")
         {
             sweetBitterBalance += ingredient.physicalQualityValue;
@@ -114,12 +91,9 @@ public class DrinkManager : MonoBehaviour
     public void ResetDrinkValues()
     {
         energizedCalmingBalance = 0;
-        lightHeavyBalance = 0;
         freshNostalgicBalance = 0;
         upliftingDepressingBalance = 0;
-        warmColdBalance = 0;
 
-        creamyThinBalance = 0;
         sweetBitterBalance = 0;
         spicyBlandBalance = 0;
         blessedCursedBalance = 0;

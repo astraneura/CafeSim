@@ -127,10 +127,6 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
             case "Calming":
                 emotionalBalance = DrinkManager.Instance.energizedCalmingBalance;
                 break;
-            case "Light":
-            case "Heavy":
-                emotionalBalance = DrinkManager.Instance.lightHeavyBalance;
-                break;
             case "Fresh":
             case "Nostalgic":
                 emotionalBalance = DrinkManager.Instance.freshNostalgicBalance;
@@ -139,10 +135,6 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
             case "Depressing":
                 emotionalBalance = DrinkManager.Instance.upliftingDepressingBalance;
                 break;
-            case "Warm":
-            case "Cold":
-                emotionalBalance = DrinkManager.Instance.warmColdBalance;
-                break;
             default:
                 emotionalBalance = 0;
                 break;
@@ -150,10 +142,6 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
 
         switch (chosenPhysicalQuality)
         {
-            case "Creamy":
-            case "Thin":
-                physicalBalance = DrinkManager.Instance.creamyThinBalance;
-                break;
             case "Sweet":
             case "Bitter":
                 physicalBalance = DrinkManager.Instance.sweetBitterBalance;
