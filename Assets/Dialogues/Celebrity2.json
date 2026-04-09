@@ -1,0 +1,1 @@
+﻿{"inkVersion":21,"root":[["^You do know who I am, right?","\n","^Good. Then don't keep me waiting.","\n","^I want a ","ev",{"VAR?":"drinkName"},"out","/ev","^.","\n","end",["done",{"#f":5,"#n":"g-0"}],null],"done",{"global decl":["ev","str","^Customer","/str",{"VAR=":"customerName"},"str","^Drink","/str",{"VAR=":"drinkName"},"/ev","end",null],"#f":1}],"listDefs":{}}

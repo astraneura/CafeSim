@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.Interactions;
 using TMPro;
+using NUnit.Framework;
 
 public class ConfusedCustomer : MonoBehaviour, ICustomer
 {
@@ -20,6 +21,7 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
     private int emotionalBalance;
     private int physicalBalance;
 
+    private bool hasOrderBeenCompleted = false;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private List<AudioClip> enterClips;
     [SerializeField] private List<AudioClip> completeClips;
@@ -29,7 +31,8 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
 
     private TextMeshProUGUI orderText;
 
-    [SerializeField] private TextAsset dialogueInk;
+    [SerializeField] private List<TextAsset> inkDialogues;
+    // [SerializeField] private TextAsset dialogueInk;
 
 
     void Awake()
@@ -164,29 +167,34 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
 
     public void CheckOrderCompletion()
     {
-        if (emotionalBalance == desiredEmotionalQualityValue && physicalBalance == desiredPhysicalQualityValue)
-        {
-            OrderManager.Instance.orderCompleted = true;
-            Debug.Log($"{customerName}'s order is complete!");
-        }
-
+        if (hasOrderBeenCompleted)
+            return;
+        
         int currentEmotional = DrinkManager.Instance.GetEmotionalBalanceForQuality(chosenEmotionalQuality);
         int currentPhysical = DrinkManager.Instance.GetPhysicalBalanceForQuality(chosenPhysicalQuality);
 
         if (currentEmotional == desiredEmotionalQualityValue && currentPhysical == desiredPhysicalQualityValue)
         {
-            if (OrderManager.Instance.currentCustomer == (ICustomer)this)
-            {
-                OrderManager.Instance.orderCompleted = true;
-                OrderManager.Instance.totalOrdersCompleted++;
-                OrderManager.Instance.dataController.GetComponent<UserProfileData>().ordersCompleted
-                = OrderManager.Instance.totalOrdersCompleted;
-            }
+            hasOrderBeenCompleted = true;
+            OrderManager.Instance.orderCompleted = true;
+            Debug.Log($"{customerName}'s order is complete!");
         }
     }
 
     public void CompleteOrder()
     {
+        if (!hasOrderBeenCompleted)
+            return;
+        
+        if (OrderManager.Instance.currentCustomer == (ICustomer)this)
+        {
+            OrderManager.Instance.orderCompleted = true;
+            OrderManager.Instance.totalOrdersCompleted++;
+            OrderManager.Instance.dataController.GetComponent<UserProfileData>().ordersCompleted
+            = OrderManager.Instance.totalOrdersCompleted;
+        }
+
+        hasOrderBeenCompleted = false;
         OrderManager.Instance.ClearCurrentOrder();
         orderText.text = "";
         Debug.Log("Adding money: $20");
@@ -201,6 +209,8 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
         audioSource.volume = 0.15f;
         audioSource.loop = true;
         audioSource.Play();
+
+        TextAsset dialogueInk = inkDialogues[Random.Range(0, inkDialogues.Count)];
 
         DialogueManager.instance.StartDialogue(
             dialogueInk,

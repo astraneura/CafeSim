@@ -1,0 +1,1 @@
+﻿{"inkVersion":21,"root":[["^Oh—um, hello.","\n","^Could I maybe get a ","ev",{"VAR?":"drinkName"},"out","/ev","^?","\n","^Thanks...","\n","end",["done",{"#f":5,"#n":"g-0"}],null],"done",{"global decl":["ev","str","^Customer","/str",{"VAR=":"customerName"},"str","^Drink","/str",{"VAR=":"drinkName"},"/ev","end",null],"#f":1}],"listDefs":{}}

@@ -108,7 +108,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 886c0d90e0376be4eb349a946b4ee988, type: 3}
   - {fileID: 8300000, guid: 742042fd7c4f57042ab4bb30f9da8462, type: 3}
   speakingClip: {fileID: 8300000, guid: 738df76abc2b06f4484a9af0895e61b4, type: 3}
-  dialogueInk: {fileID: 4900000, guid: 3d2b58ce12cb331438488bd45f0b51ee, type: 3}
+  inkDialogues:
+  - {fileID: 4900000, guid: 3d2b58ce12cb331438488bd45f0b51ee, type: 3}
+  - {fileID: 4900000, guid: 035a7dd093898f243b5b838094daa25a, type: 3}
+  - {fileID: 4900000, guid: 186d45e316d92c141a9b3df35af98ea2, type: 3}
+  - {fileID: 4900000, guid: 7a0d04e7be374144798df86f40fd5e0a, type: 3}
 --- !u!82 &-2480177586326845010
 AudioSource:
   m_ObjectHideFlags: 0

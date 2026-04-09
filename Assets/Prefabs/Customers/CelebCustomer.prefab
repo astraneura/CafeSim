@@ -331,7 +331,11 @@ MonoBehaviour:
   drinkRecipeDatabase: {fileID: 11400000, guid: 884f5d38a4ac2ce4d85d5ba125b06efa, type: 2}
   customerName: 
   orderTimeLimit: 20
-  dialogueInk: {fileID: 4900000, guid: 394abff383891f443bd0769045f36c51, type: 3}
+  inkDialogues:
+  - {fileID: 4900000, guid: 394abff383891f443bd0769045f36c51, type: 3}
+  - {fileID: 4900000, guid: cc685762d22d66f4dadaf147789aa212, type: 3}
+  - {fileID: 4900000, guid: 2986f6c289d7b0a41a3e8de8a6646ef4, type: 3}
+  - {fileID: 4900000, guid: 13fd210056a987a4b86c85ececff00ec, type: 3}
   currentRecipe: {fileID: 0}
   currentOrder: []
   patienceSlider: {fileID: 5204775595531388383}

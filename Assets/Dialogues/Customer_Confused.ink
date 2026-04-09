@@ -3,6 +3,6 @@ VAR emotionalQuality = "energizing"
 VAR physicalQuality = "sweet"
 
 
-Hello, I am {customerName}.
-I need something {emotionalQuality} and {physicalQuality}.
+I'm not really sure what I want...
+Could you make me something that's {emotionalQuality} and {physicalQuality}?
 -> END

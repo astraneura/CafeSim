@@ -168,7 +168,12 @@ MonoBehaviour:
   drinkRecipeDatabase: {fileID: 11400000, guid: 884f5d38a4ac2ce4d85d5ba125b06efa, type: 2}
   customerName: 
   orderTimeLimit: 30
-  dialogueInk: {fileID: 4900000, guid: 1fdadca5e3f74e74eb070def786dff17, type: 3}
+  inkDialogues:
+  - {fileID: 4900000, guid: 1fdadca5e3f74e74eb070def786dff17, type: 3}
+  - {fileID: 4900000, guid: 93946b65a43f6e9469ee156989121b83, type: 3}
+  - {fileID: 4900000, guid: 5c06fec7abf8be04e93d0f61f4a94002, type: 3}
+  - {fileID: 4900000, guid: 238e141fae4e78a4097b50b20d3b5f09, type: 3}
+  - {fileID: 4900000, guid: 5d9d7e0d2dd0baa409f844f785f9e3c1, type: 3}
   currentRecipe: {fileID: 0}
   currentOrder: []
   patienceSlider: {fileID: 5477314230889508772}

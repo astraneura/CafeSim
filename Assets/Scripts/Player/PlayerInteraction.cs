@@ -131,12 +131,6 @@ public class PlayerInteraction : MonoBehaviour
                         return;
                     }
                     machine.Interact(activeCustomer);
-                    // Ingredient machineIngredient = machine.GetIngredient();
-                    // if (machineIngredient != null)
-                    // {
-                    //     DrinkManager.Instance.CalculateEmotionalValue(machineIngredient);
-                    //     DrinkManager.Instance.CalculatePhysicalValue(machineIngredient);
-                    // }
                 }
             }
         }

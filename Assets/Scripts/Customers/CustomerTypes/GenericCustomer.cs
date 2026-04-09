@@ -26,7 +26,8 @@ public class GenericCustomer : MonoBehaviour, ICustomer
     protected float orderTimer;
     protected bool orderInProgress = false;
 
-    [SerializeField] private TextAsset dialogueInk;
+    [SerializeField] private List<TextAsset> inkDialogues;
+   // [SerializeField] private TextAsset dialogueInk;
 
     public DrinkRecipe currentRecipe;
     public List<OrderStep> currentOrder = new List<OrderStep>();
@@ -167,6 +168,8 @@ public class GenericCustomer : MonoBehaviour, ICustomer
         audioSource.volume = 0.25f;
         audioSource.loop = true;
         audioSource.Play();
+
+        TextAsset dialogueInk = inkDialogues[Random.Range(0, inkDialogues.Count)];
 
         DialogueManager.instance.StartDialogue(
             dialogueInk, this, story =>

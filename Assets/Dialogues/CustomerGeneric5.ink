@@ -1,6 +1,7 @@
 VAR customerName = "Customer"
 VAR drinkName = "Drink"
 
-
-Hello! I would like to order a {drinkName}.
+Oh—um, hello.
+Could I maybe get a {drinkName}?
+Thanks...
 -> END

@@ -1,0 +1,1 @@
+﻿{"inkVersion":21,"root":[["^I'm already running late.","\n","^Every second counts.","\n","ev",{"VAR?":"drinkName"},"out","/ev","^. Now.","\n","end",["done",{"#f":5,"#n":"g-0"}],null],"done",{"global decl":["ev","str","^Customer","/str",{"VAR=":"customerName"},"str","^Drink","/str",{"VAR=":"drinkName"},"/ev","end",null],"#f":1}],"listDefs":{}}
