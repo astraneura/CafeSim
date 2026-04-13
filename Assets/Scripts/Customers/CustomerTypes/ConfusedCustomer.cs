@@ -34,6 +34,8 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
     [SerializeField] private List<TextAsset> inkDialogues;
     // [SerializeField] private TextAsset dialogueInk;
 
+    public ParticleSystem completeParticles;
+
 
     void Awake()
     {
@@ -200,7 +202,11 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
         Debug.Log("Adding money: $20");
         FindAnyObjectByType<PlayerInteraction>().AddMoney(20f);
         PlayCompleteSound();
-        Destroy(gameObject);
+        if (completeParticles != null)
+        {
+            completeParticles.Play();
+        }
+        Destroy(gameObject, 0.9f);
     }
 
     public void Speak()

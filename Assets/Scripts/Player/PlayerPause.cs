@@ -7,6 +7,7 @@ public class PlayerPause : MonoBehaviour
     [SerializeField] private InputActionReference pauseAction;
     [SerializeField]private GameObject pauseMenuUI;
     [SerializeField] private GameObject instructionsUI;
+[SerializeField] private PlayerInteraction playerInteraction;
     private MouseLook mouseLook;
 
 
@@ -43,6 +44,7 @@ public class PlayerPause : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             pauseMenuUI.SetActive(true); 
             mouseLook.enabled = false;
+            playerInteraction.isMenuOpen = true;
         }
         else
         {
@@ -50,6 +52,8 @@ public class PlayerPause : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             pauseMenuUI.SetActive(false);
             mouseLook.enabled = true;
+            playerInteraction.isMenuOpen = false;
+
         }
     }
 
@@ -59,6 +63,7 @@ public class PlayerPause : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         pauseMenuUI.SetActive(false);
         mouseLook.enabled = true;
+        playerInteraction.isMenuOpen = false;
     }
 
     public void OnInstructions()

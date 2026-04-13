@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class ToppingsBox : MonoBehaviour
 {
     private DrinkManager drinkManager;
+    [SerializeField] PlayerInteraction playerInteraction;
     public GameObject toppingMenuUI; // Reference to the Topping Menu UI
     public MouseLook mouseLook;
     public static bool ToppingsMenuOpen = false;
@@ -18,6 +19,7 @@ public class ToppingsBox : MonoBehaviour
         toppingMenuUI.SetActive(true);
         ToppingsMenuOpen = true;
         Time.timeScale = 0f; // Pause the game
+        playerInteraction.isMenuOpen = true;
         mouseLook.enabled = false;
         Cursor.lockState = CursorLockMode.None;
 
@@ -28,6 +30,7 @@ public class ToppingsBox : MonoBehaviour
         toppingMenuUI.SetActive(false);
         ToppingsMenuOpen = false;
         Time.timeScale = 1f; // Resume the game
+        playerInteraction.isMenuOpen = false;
         mouseLook.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
     }

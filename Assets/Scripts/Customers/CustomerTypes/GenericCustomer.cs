@@ -34,6 +34,7 @@ public class GenericCustomer : MonoBehaviour, ICustomer
 
     // UI Elements
     public Slider patienceSlider;
+    public ParticleSystem completeParticles;
 
     void Awake()
     {
@@ -158,7 +159,11 @@ public class GenericCustomer : MonoBehaviour, ICustomer
             Debug.Log("Adding money: " + currentRecipe.cost);
             FindAnyObjectByType<PlayerInteraction>().AddMoney(currentRecipe.cost);
             PlayCompleteSound();
-            Destroy(gameObject, 0.3f);
+            if (completeParticles != null)
+            {
+                completeParticles.Play();
+            }
+            Destroy(gameObject, 0.9f);
         }
     }
 

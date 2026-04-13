@@ -21,6 +21,8 @@ public class PlayerInteraction : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI moneyText;
     private ICustomer currentCustomer;
+    public bool isMenuOpen = false;
+
     private void Start()
     {
         DrinkManager.Instance = FindAnyObjectByType<DrinkManager>();
@@ -171,6 +173,9 @@ public class PlayerInteraction : MonoBehaviour
 
         if (hit.collider.CompareTag("Customer"))
         {
+            if (isMenuOpen)
+                return;
+            
             ICustomer customer = hit.collider.GetComponent<ICustomer>();
             if (customer == null)
                 return;
@@ -188,9 +193,9 @@ public class PlayerInteraction : MonoBehaviour
         
         if(hit.collider.GetComponent<IOrderStepSourceInterface>() != null ||
            hit.collider.CompareTag("ToppingsBox") ||
-           hit.collider.CompareTag("Trash"))
+           hit.collider.CompareTag("Trash") && !isMenuOpen)
         {
-            if (OrderManager.Instance.currentCustomer != null)
+            if (OrderManager.Instance.currentCustomer != null && !isMenuOpen)
                 interactIcon.SetActive(true);
         }
     }
