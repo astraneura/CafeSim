@@ -158,7 +158,7 @@ public class CelebrityCustomer : MonoBehaviour, ICustomer
             orderInProgress = false;
             OrderManager.Instance.ClearCurrentOrder();
             Debug.Log("Adding money: " + currentRecipe.cost);
-            FindAnyObjectByType<PlayerInteraction>().AddMoney(currentRecipe.cost);
+            FindAnyObjectByType<PlayerInteraction>().AddMoney(currentRecipe.cost + 5.95f); // Celebrities pay more!
             PlayCompleteSound();
             if (completeParticles != null)
             {

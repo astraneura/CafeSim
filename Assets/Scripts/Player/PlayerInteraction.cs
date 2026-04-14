@@ -56,16 +56,11 @@ public class PlayerInteraction : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
+            ICustomer customer = null;
             // Check if the hit object has the "Customer" tag
             if (hit.collider.CompareTag("Customer"))
             {
-                if (!canGenerateOrder && !OrderManager.Instance.orderCompleted)
-                {
-                    Debug.Log("Cannot generate a new order until the current one is completed.");
-                    return;
-                }
                 // Loop through all MonoBehaviours on the hit object to find one that implements ICustomer
-                ICustomer customer = null;
                 foreach (var mb in hit.collider.GetComponents<MonoBehaviour>())
                 {
                     if (mb is ICustomer)
@@ -77,7 +72,40 @@ public class PlayerInteraction : MonoBehaviour
 
                 if (customer == null)
                 {
-                    Debug.LogError("Hit object tagged 'Customer' but no ICustomer found.");
+                    Debug.LogError("Hit object tagged 'Customer' but no ICustomer found."); // This should never happen if the game is set up correctly, but it's good to check.
+                    return;
+                }
+
+                if (!(customer is ConfusedCustomer) && !canGenerateOrder && !OrderManager.Instance.orderCompleted)
+                {
+                    Debug.Log("Cannot generate a new order until the current one is completed.");
+                    return;
+                }
+
+                if (customer is ConfusedCustomer confusedCustomer)
+                {
+                    if (OrderManager.Instance.currentCustomer == customer &&
+                        confusedCustomer.IsOrderCompleted())
+                    {
+                        customer.CompleteOrder();
+                        Debug.Log("ConfusedCustomer order completed.");
+                        GameManager.Instance.OnCustomerOrderCompleted();
+                        canGenerateOrder = true; // Allow generating a new order
+                        currentCustomer = null;
+                    }
+                    else if (OrderManager.Instance.currentCustomer != customer)
+                    {
+                        currentCustomer = customer;
+                        if (customer.GenerateOrder())
+                        {
+                            currentCustomer.Speak();
+                            canGenerateOrder = false; // limit to one active order at a time
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Cannot interact with this customer right now.");
+                    }
                     return;
                 }
 
@@ -98,43 +126,44 @@ public class PlayerInteraction : MonoBehaviour
                     }
                 }
                 else
-                if (customer != null)
-                {
-                    currentCustomer = customer;
-                    if (customer.GenerateOrder())
+                    if (customer != null)
                     {
-                        currentCustomer.Speak();
-                        canGenerateOrder = false; // limit to one active order at a time
+                        currentCustomer = customer;
+                        if (customer.GenerateOrder())
+                        {
+                            currentCustomer.Speak();
+                            canGenerateOrder = false; // limit to one active order at a time
+                        }
+                        else
+                        {
+                            Debug.Log("Failed to generate order for customer.");
+                        }
                     }
-                    else
-                    {
-                        Debug.Log("Failed to generate order for customer.");
-                    }
-                }
             }
             else if (hit.collider.CompareTag("ToppingsBox"))
             {
                 hit.collider.GetComponent<ToppingsBox>().OpenToppingMenu();
-            } else 
-            if (hit.collider.CompareTag("Trash"))
-            {
-                DrinkManager.Instance.ResetDrinkValues();
             }
             else
-            {
-                // Handle other interactions
-                IOrderStepSourceInterface machine = hit.collider.GetComponent<IOrderStepSourceInterface>();
-                if (machine != null)
+                if (hit.collider.CompareTag("Trash"))
                 {
-                    ICustomer activeCustomer = OrderManager.Instance.currentCustomer;
-                    if (activeCustomer == null)
-                    {
-                        Debug.Log("No active customer to serve.");
-                        return;
-                    }
-                    machine.Interact(activeCustomer);
+                    DrinkManager.Instance.ResetDrinkValues();
                 }
-            }
+                else
+                {
+                    // Handle other interactions
+                    IOrderStepSourceInterface machine = hit.collider.GetComponent<IOrderStepSourceInterface>();
+                    if (machine != null)
+                    {
+                        ICustomer activeCustomer = OrderManager.Instance.currentCustomer;
+                        if (activeCustomer == null)
+                        {
+                            Debug.Log("No active customer to serve.");
+                            return;
+                        }
+                        machine.Interact(activeCustomer);
+                    }
+                }
         }
     }
 
@@ -175,23 +204,23 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (isMenuOpen)
                 return;
-            
+
             ICustomer customer = hit.collider.GetComponent<ICustomer>();
             if (customer == null)
                 return;
-            
-            if(!canGenerateOrder && OrderManager.Instance.currentCustomer != customer)
+
+            if (!canGenerateOrder && OrderManager.Instance.currentCustomer != customer)
                 return;
 
-            if(OrderManager.Instance.orderCompleted
+            if (OrderManager.Instance.orderCompleted
                 && OrderManager.Instance.currentCustomer != customer)
                 return;
-            
+
             talkIcon.SetActive(true);
             return;
         }
-        
-        if(hit.collider.GetComponent<IOrderStepSourceInterface>() != null ||
+
+        if (hit.collider.GetComponent<IOrderStepSourceInterface>() != null ||
            hit.collider.CompareTag("ToppingsBox") ||
            hit.collider.CompareTag("Trash") && !isMenuOpen)
         {

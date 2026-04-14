@@ -10,7 +10,7 @@ public class Qualities
     //Emotional Qualities
     public List<string> emotionalQualities = new List<string>
     {
-        "Energized", "Calming",
+        "Energizing", "Calming",
         "Fresh", "Nostalgic",
         "Uplifting", "Depressing",
     };
@@ -24,7 +24,7 @@ public class Qualities
 
     public List<string> negativeEmotionalQualities = new List<string>
     {
-        "Energized",
+        "Energizing",
         "Nostalgic",
         "Depressing",
     };

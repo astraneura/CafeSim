@@ -10,10 +10,14 @@ public class FoamMachine : MonoBehaviour, IOrderStepSourceInterface
     private ICustomer currentCustomer;
     private Slider progressBar;
 
+    public AudioSource audioSource;
+    private bool isAudioPlaying = false;
+
     void Start()
     {
         progressBar = GetComponentInChildren<Slider>();
         progressBar.gameObject.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -47,6 +51,11 @@ public class FoamMachine : MonoBehaviour, IOrderStepSourceInterface
     {
         isWorking = true;
         workTimer = workDuration;
+        if (!isAudioPlaying)
+        {
+            audioSource.Play();
+            isAudioPlaying = true;
+        }
         if (progressBar != null)
         {
             progressBar.gameObject.SetActive(true);
@@ -57,6 +66,11 @@ public class FoamMachine : MonoBehaviour, IOrderStepSourceInterface
     private void CompleteWork()
     {
         isWorking = false;
+        if (isAudioPlaying)
+        {
+            audioSource.Stop();
+            isAudioPlaying = false;
+        }
         if (progressBar != null)
         {
             progressBar.gameObject.SetActive(false);
@@ -74,7 +88,7 @@ public class FoamMachine : MonoBehaviour, IOrderStepSourceInterface
     {
         return "Add Foam";
     }
-    
+
     public Ingredient GetIngredient()
     {
         return null;

@@ -19,7 +19,7 @@ public class EndMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None; // Unlock the cursor when the end menu is displayed
         Cursor.visible = true; // Make the cursor visible
 
-        if (OrderManager.Instance.totalMoneyMade >= 40f)
+        if (OrderManager.Instance.totalMoneyMade >= 75f)
         {
             clearText.text = "Congratulations! You made enough money to win!";
         } else

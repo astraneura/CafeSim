@@ -34,10 +34,10 @@ public class DrinkManager : MonoBehaviour
         if (ingredient == null)
             return 0;
 
-        if (ingredient.emotionalQuality == "Energized" || ingredient.emotionalQuality == "Calming")
+        if (ingredient.emotionalQuality == "Energizing" || ingredient.emotionalQuality == "Calming")
         {
             energizedCalmingBalance += ingredient.emotionalQualityValue;
-            Debug.Log("Calculated Energized/Calming Emotional Value: " + energizedCalmingBalance);
+            Debug.Log("Calculated Energizing/Calming Emotional Value: " + energizedCalmingBalance);
             balanceUI.UpdateUI();
             return energizedCalmingBalance;
         }

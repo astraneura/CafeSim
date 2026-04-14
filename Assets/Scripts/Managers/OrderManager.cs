@@ -20,6 +20,10 @@ public class OrderManager : MonoBehaviour
 
     public GameObject dataController;
 
+    public AudioSource audioSource;
+    public AudioClip failSound;
+    public AudioClip successSound;
+
     // variables for the UI
     [SerializeField] private TextMeshProUGUI orderStepText;
     [SerializeField] private Transform orderStepsContainer;
@@ -72,6 +76,7 @@ public class OrderManager : MonoBehaviour
                 Transform completedStepTransform = orderStepsContainer.GetChild(currentStepIndex);
                 completedStepTransform.GetComponent<TextMeshProUGUI>().color = Color.green;
                 orderCompleted = true;
+                audioSource.PlayOneShot(successSound);
                 totalOrdersCompleted++;
                 dataController.GetComponent<UserProfileData>().ordersCompleted = totalOrdersCompleted;
                 return false;
@@ -91,12 +96,14 @@ public class OrderManager : MonoBehaviour
                     completedStepTransform.GetComponent<TextMeshProUGUI>().color = Color.green;
                 }
                 currentStepIndex++;
+                audioSource.PlayOneShot(successSound);
                 Debug.Log($"Step '{attemptedStep}' completed for order from {currentOrder.customerID}.");
                 return true; // Step completed successfully
             }
         }
         Debug.Log($"Step '{attemptedStep}' failed for order from {currentOrder.customerID}. Resetting order.");
         currentOrder.Reset();
+        audioSource.PlayOneShot(failSound);
         currentStepIndex = 0;
         for (int i = 0; i < currentOrderSteps.Count; i++)
         {

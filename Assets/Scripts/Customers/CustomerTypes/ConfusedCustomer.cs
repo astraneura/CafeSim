@@ -36,6 +36,8 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
 
     public ParticleSystem completeParticles;
 
+    private float profitAmount;
+
 
     void Awake()
     {
@@ -47,14 +49,13 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
     void Start()
     {
         PlayEnterSound();
+
+        profitAmount = Random.Range(9f, 15f);
     }
 
     void Update()
     {
-        if (!pInteract.canGenerateOrder)
-        {
-            CheckOrderCompletion();
-        }
+        CheckOrderCompletion();
     }
 
     void PlayEnterSound()
@@ -89,6 +90,7 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
 
     public bool GenerateOrder()
     {
+        DrinkManager.Instance.ResetDrinkValues();
         GameManager.Instance.EnableQualityMachines();
         OrderManager.Instance.SetConfusedCustomer(this);
         chosenQualities = new Qualities();
@@ -169,16 +171,24 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
 
     public void CheckOrderCompletion()
     {
+        if (string.IsNullOrEmpty(chosenEmotionalQuality) || string.IsNullOrEmpty(chosenPhysicalQuality))
+            return; // No order has been generated yet
+        
         if (hasOrderBeenCompleted)
             return;
         
         int currentEmotional = DrinkManager.Instance.GetEmotionalBalanceForQuality(chosenEmotionalQuality);
         int currentPhysical = DrinkManager.Instance.GetPhysicalBalanceForQuality(chosenPhysicalQuality);
 
+        Debug.Log(
+        $"CHECKING ORDER:\n" +
+        $"Emotional: {chosenEmotionalQuality} | Current: {currentEmotional} | Target: {desiredEmotionalQualityValue}\n" +
+        $"Physical: {chosenPhysicalQuality} | Current: {currentPhysical} | Target: {desiredPhysicalQualityValue}"
+    );
+
         if (currentEmotional == desiredEmotionalQualityValue && currentPhysical == desiredPhysicalQualityValue)
         {
             hasOrderBeenCompleted = true;
-            OrderManager.Instance.orderCompleted = true;
             Debug.Log($"{customerName}'s order is complete!");
         }
     }
@@ -199,8 +209,7 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
         hasOrderBeenCompleted = false;
         OrderManager.Instance.ClearCurrentOrder();
         orderText.text = "";
-        Debug.Log("Adding money: $20");
-        FindAnyObjectByType<PlayerInteraction>().AddMoney(20f);
+        FindAnyObjectByType<PlayerInteraction>().AddMoney(profitAmount);
         PlayCompleteSound();
         if (completeParticles != null)
         {
@@ -243,6 +252,11 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
     {
         DialogueManager.GetInstance().dialogueText.text = "";
         DialogueManager.GetInstance().dialoguePanel.SetActive(false);
+    }
+
+    public bool IsOrderCompleted()
+    {
+        return hasOrderBeenCompleted; // This will be used by the OrderManager to check if the order is complete when the player attempts to complete it.
     }
 
 

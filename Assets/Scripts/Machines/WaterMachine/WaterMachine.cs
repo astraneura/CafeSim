@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class WaterMachine : MonoBehaviour, IOrderStepSourceInterface
 {
@@ -12,10 +13,15 @@ public class WaterMachine : MonoBehaviour, IOrderStepSourceInterface
 
     public Ingredient water;
 
+    public AudioSource audioSource;
+    public List<AudioClip> workClips;
+    bool isAudioPlaying = false;
+
     void Start()
     {
         progressBar = GetComponentInChildren<Slider>();
         progressBar.gameObject.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -49,6 +55,13 @@ public class WaterMachine : MonoBehaviour, IOrderStepSourceInterface
     {
         isWorking = true;
         workTimer = workDuration;
+        if (!isAudioPlaying)
+        {
+            int randomIndex = Random.Range(0, workClips.Count);
+            audioSource.clip = workClips[randomIndex];
+            audioSource.Play();
+            isAudioPlaying = true;
+        }
         if (progressBar != null)
         {
             progressBar.gameObject.SetActive(true);
@@ -59,6 +72,11 @@ public class WaterMachine : MonoBehaviour, IOrderStepSourceInterface
     private void CompleteWork()
     {
         isWorking = false;
+        if (isAudioPlaying)
+        {
+            audioSource.Stop();
+            isAudioPlaying = false;
+        }
         if (progressBar != null)
         {
             progressBar.gameObject.SetActive(false);

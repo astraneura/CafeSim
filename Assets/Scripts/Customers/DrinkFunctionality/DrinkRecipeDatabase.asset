@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: DrinkRecipeDatabase
   m_EditorClassIdentifier: 
   allRecipes:
+  - {fileID: 11400000, guid: 20b8dd86b02387346934a1151d62932d, type: 2}
   - {fileID: 11400000, guid: 7c0380975995a104da760bc1014ffc60, type: 2}
   - {fileID: 11400000, guid: 5787b97731e39c74794a4ae4321b11c7, type: 2}
   - {fileID: 11400000, guid: 3d97461b5857d3844b9919368489948e, type: 2}
