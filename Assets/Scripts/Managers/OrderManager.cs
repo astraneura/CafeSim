@@ -37,9 +37,20 @@ public class OrderManager : MonoBehaviour
             Destroy(gameObject);
 
         pInteract = FindAnyObjectByType<PlayerInteraction>();
+
+        if (dataController == null)
+        {
+            dataController = GameObject.Find("DataController");
+        }
+
+        if (dataController == null)
+        {
+            Debug.LogError("DataController not found in scene!");
+        }
+
         totalOrdersCompleted = 0;
         totalOrdersFailed = 0;
-        DontDestroyOnLoad(this.gameObject);
+        // DontDestroyOnLoad(this.gameObject);
     }
 
     public void SetCurrentOrder(ICustomer customer, DrinkRecipe recipe)
@@ -73,12 +84,24 @@ public class OrderManager : MonoBehaviour
             if (currentOrder.isCompleted)
             {
                 Debug.Log($"{currentOrder.customerID}'s order complete!");
-                Transform completedStepTransform = orderStepsContainer.GetChild(currentStepIndex);
-                completedStepTransform.GetComponent<TextMeshProUGUI>().color = Color.green;
+                if (orderStepsContainer != null && currentStepIndex < orderStepsContainer.childCount)
+                {
+                    Transform completedStepTransform = orderStepsContainer.GetChild(currentStepIndex);
+                    var text = completedStepTransform.GetComponent<TextMeshProUGUI>();
+                    if (text != null)
+                        text.color = Color.green;
+                }
                 orderCompleted = true;
                 audioSource.PlayOneShot(successSound);
                 totalOrdersCompleted++;
-                dataController.GetComponent<UserProfileData>().ordersCompleted = totalOrdersCompleted;
+                if (dataController != null)
+                {
+                    var data = dataController.GetComponent<UserProfileData>();
+                    if (data != null)
+                    {
+                        data.ordersCompleted = totalOrdersCompleted;
+                    }
+                }
                 return false;
             }
             else if (currentStepIndex >= currentOrderSteps.Count)
@@ -86,20 +109,20 @@ public class OrderManager : MonoBehaviour
                 return false; // No more steps to complete
             }
             else
-            if (currentOrderSteps[currentStepIndex].stepName == attemptedStep)
-            {
-                currentOrderSteps[currentStepIndex].isCompleted = true;
-                // Change color of the completed step's UI element
-                if (currentStepIndex < orderStepsContainer.childCount)
+                if (currentOrderSteps[currentStepIndex].stepName == attemptedStep)
                 {
-                    Transform completedStepTransform = orderStepsContainer.GetChild(currentStepIndex);
-                    completedStepTransform.GetComponent<TextMeshProUGUI>().color = Color.green;
+                    currentOrderSteps[currentStepIndex].isCompleted = true;
+                    // Change color of the completed step's UI element
+                    if (currentStepIndex < orderStepsContainer.childCount)
+                    {
+                        Transform completedStepTransform = orderStepsContainer.GetChild(currentStepIndex);
+                        completedStepTransform.GetComponent<TextMeshProUGUI>().color = Color.green;
+                    }
+                    currentStepIndex++;
+                    audioSource.PlayOneShot(successSound);
+                    Debug.Log($"Step '{attemptedStep}' completed for order from {currentOrder.customerID}.");
+                    return true; // Step completed successfully
                 }
-                currentStepIndex++;
-                audioSource.PlayOneShot(successSound);
-                Debug.Log($"Step '{attemptedStep}' completed for order from {currentOrder.customerID}.");
-                return true; // Step completed successfully
-            }
         }
         Debug.Log($"Step '{attemptedStep}' failed for order from {currentOrder.customerID}. Resetting order.");
         currentOrder.Reset();
@@ -138,5 +161,26 @@ public class OrderManager : MonoBehaviour
         currentOrder = null;
         currentOrderSteps.Clear();
         orderCompleted = false;
+    }
+
+    public void ResetManager()
+    {
+        currentOrder = null;
+        currentOrderSteps.Clear();
+        currentStepIndex = 0;
+        orderCompleted = false;
+        currentCustomer = null;
+
+        totalOrdersCompleted = 0;
+        totalOrdersFailed = 0;
+        totalMoneyMade = 0;
+
+        // IMPORTANT: refresh scene references
+        pInteract = FindAnyObjectByType<PlayerInteraction>();
+
+        foreach (Transform child in orderStepsContainer)
+        {
+            Destroy(child.gameObject);
+        }
     }
 }

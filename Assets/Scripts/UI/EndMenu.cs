@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 // This script handles the end menu functionality, allowing players to replay the game or quit
 
@@ -19,26 +20,27 @@ public class EndMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None; // Unlock the cursor when the end menu is displayed
         Cursor.visible = true; // Make the cursor visible
 
-        if (OrderManager.Instance.totalMoneyMade >= 75f)
-        {
-            clearText.text = "Congratulations! You made enough money to win!";
-        } else
-        {
-            clearText.text = "Game Over! You didn't make enough money to win.";
-        }
 
-        totalOrdersCompletedText.text = "Total Orders Completed: " + OrderManager.Instance.totalOrdersCompleted;
-        totalOrdersFailedText.text = "Total Orders Failed: " + OrderManager.Instance.totalOrdersFailed;
-        totalMoneyMadeText.text = "Total Money Made: $" + OrderManager.Instance.totalMoneyMade.ToString("F2");
     }
     public void ReplayGame()
     {
-
-        SceneManager.LoadSceneAsync(1);
+        StartCoroutine(Replay());
     }
 
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    private IEnumerator Replay()
+    {
+        if (OrderManager.Instance != null)
+        {
+            OrderManager.Instance.ResetManager();
+        }
+
+        yield return null;
+
+        SceneManager.LoadScene(0);
     }
 }

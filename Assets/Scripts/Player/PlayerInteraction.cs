@@ -182,7 +182,14 @@ public class PlayerInteraction : MonoBehaviour
     {
         moneyMade += amount;
         OrderManager.Instance.totalMoneyMade = moneyMade;
-        OrderManager.Instance.dataController.GetComponent<UserProfileData>().moneyMade = moneyMade;
+        if (OrderManager.Instance.dataController != null)
+        {
+            var data = OrderManager.Instance.dataController.GetComponent<UserProfileData>();
+            if (data != null)
+            {
+                data.moneyMade = moneyMade;
+            }
+        }
         if (moneyText != null)
         {
             moneyText.text = "Money: $" + moneyMade.ToString("F2");

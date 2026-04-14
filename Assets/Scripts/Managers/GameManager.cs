@@ -171,7 +171,13 @@ public class GameManager : MonoBehaviour
 
     private void EndDay()
     {
-        SceneManager.LoadScene("End");
+        if (OrderManager.Instance.totalMoneyMade >= 75)
+        {
+            SceneManager.LoadScene("Win");
+        } else
+        {
+            SceneManager.LoadScene("Lose");
+        }
     }
 
     public void EnableQualityMachines()
