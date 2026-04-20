@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.Rendering;
+using Unity.VisualScripting;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private TextMeshProUGUI moneyText;
     private ICustomer currentCustomer;
     public bool isMenuOpen = false;
+
+    [SerializeField] private OrderManager orderManager;
 
     private void Start()
     {
@@ -76,7 +79,7 @@ public class PlayerInteraction : MonoBehaviour
                     return;
                 }
 
-                if (!(customer is ConfusedCustomer) && !canGenerateOrder && !OrderManager.Instance.orderCompleted)
+                if (!(customer is ConfusedCustomer) && !canGenerateOrder && !orderManager.orderCompleted)
                 {
                     Debug.Log("Cannot generate a new order until the current one is completed.");
                     return;
@@ -84,7 +87,7 @@ public class PlayerInteraction : MonoBehaviour
 
                 if (customer is ConfusedCustomer confusedCustomer)
                 {
-                    if (OrderManager.Instance.currentCustomer == customer &&
+                    if (orderManager.currentCustomer == customer &&
                         confusedCustomer.IsOrderCompleted())
                     {
                         customer.CompleteOrder();
@@ -93,7 +96,7 @@ public class PlayerInteraction : MonoBehaviour
                         canGenerateOrder = true; // Allow generating a new order
                         currentCustomer = null;
                     }
-                    else if (OrderManager.Instance.currentCustomer != customer)
+                    else if (orderManager.currentCustomer != customer)
                     {
                         currentCustomer = customer;
                         if (customer.GenerateOrder())
@@ -109,13 +112,13 @@ public class PlayerInteraction : MonoBehaviour
                     return;
                 }
 
-                if (OrderManager.Instance.orderCompleted && customer != null)
+                if (orderManager.orderCompleted && customer != null)
                 {
-                    if (OrderManager.Instance.currentCustomer == customer)
+                    if (orderManager.currentCustomer == customer)
                     {
                         customer.CompleteOrder();
                         Debug.Log("Customer order completed.");
-                        OrderManager.Instance.orderCompleted = false;
+                        orderManager.orderCompleted = false;
                         GameManager.Instance.OnCustomerOrderCompleted();
                         canGenerateOrder = true; // Allow generating a new order
                         currentCustomer = null;
@@ -155,7 +158,7 @@ public class PlayerInteraction : MonoBehaviour
                     IOrderStepSourceInterface machine = hit.collider.GetComponent<IOrderStepSourceInterface>();
                     if (machine != null)
                     {
-                        ICustomer activeCustomer = OrderManager.Instance.currentCustomer;
+                        ICustomer activeCustomer = orderManager.currentCustomer;
                         if (activeCustomer == null)
                         {
                             Debug.Log("No active customer to serve.");
@@ -181,15 +184,15 @@ public class PlayerInteraction : MonoBehaviour
     public void AddMoney(float amount)
     {
         moneyMade += amount;
-        OrderManager.Instance.totalMoneyMade = moneyMade;
-        if (OrderManager.Instance.dataController != null)
-        {
-            var data = OrderManager.Instance.dataController.GetComponent<UserProfileData>();
-            if (data != null)
-            {
-                data.moneyMade = moneyMade;
-            }
-        }
+        orderManager.totalMoneyMade = moneyMade;
+        // if (orderManager.dataController != null)
+        // {
+        //     var data = orderManager.dataController.GetComponent<UserProfileData>();
+        //     if (data != null)
+        //     {
+        //         data.moneyMade = moneyMade;
+        //     }
+        // }
         if (moneyText != null)
         {
             moneyText.text = "Money: $" + moneyMade.ToString("F2");
@@ -216,11 +219,11 @@ public class PlayerInteraction : MonoBehaviour
             if (customer == null)
                 return;
 
-            if (!canGenerateOrder && OrderManager.Instance.currentCustomer != customer)
+            if (!canGenerateOrder && orderManager.currentCustomer != customer)
                 return;
 
-            if (OrderManager.Instance.orderCompleted
-                && OrderManager.Instance.currentCustomer != customer)
+            if (orderManager.orderCompleted
+                && orderManager.currentCustomer != customer)
                 return;
 
             talkIcon.SetActive(true);
@@ -231,7 +234,7 @@ public class PlayerInteraction : MonoBehaviour
            hit.collider.CompareTag("ToppingsBox") ||
            hit.collider.CompareTag("Trash") && !isMenuOpen)
         {
-            if (OrderManager.Instance.currentCustomer != null && !isMenuOpen)
+            if (orderManager.currentCustomer != null && !isMenuOpen)
                 interactIcon.SetActive(true);
         }
     }

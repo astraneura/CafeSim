@@ -39,6 +39,7 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
     private float profitAmount;
 
 
+
     void Awake()
     {
         customerName = GetCustomerName();
@@ -202,14 +203,15 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
         {
             OrderManager.Instance.orderCompleted = true;
             OrderManager.Instance.totalOrdersCompleted++;
-            OrderManager.Instance.dataController.GetComponent<UserProfileData>().ordersCompleted
-            = OrderManager.Instance.totalOrdersCompleted;
+            // OrderManager.Instance.dataController.GetComponent<UserProfileData>().ordersCompleted
+            // = OrderManager.Instance.totalOrdersCompleted;
         }
 
         hasOrderBeenCompleted = false;
         OrderManager.Instance.ClearCurrentOrder();
         orderText.text = "";
-        FindAnyObjectByType<PlayerInteraction>().AddMoney(profitAmount);
+        //FindAnyObjectByType<PlayerInteraction>().AddMoney(profitAmount);
+        pInteract.AddMoney(profitAmount);
         PlayCompleteSound();
         if (completeParticles != null)
         {

@@ -18,7 +18,7 @@ public class OrderManager : MonoBehaviour
     public int totalOrdersFailed = 0;
     public float totalMoneyMade = 0;
 
-    public GameObject dataController;
+    //public GameObject dataController;
 
     public AudioSource audioSource;
     public AudioClip failSound;
@@ -38,15 +38,15 @@ public class OrderManager : MonoBehaviour
 
         pInteract = FindAnyObjectByType<PlayerInteraction>();
 
-        if (dataController == null)
-        {
-            dataController = GameObject.Find("DataController");
-        }
+        // if (dataController == null)
+        // {
+        //     dataController = GameObject.Find("DataController");
+        // }
 
-        if (dataController == null)
-        {
-            Debug.LogError("DataController not found in scene!");
-        }
+        // if (dataController == null)
+        // {
+        //     Debug.LogError("DataController not found in scene!");
+        // }
 
         totalOrdersCompleted = 0;
         totalOrdersFailed = 0;
@@ -94,14 +94,14 @@ public class OrderManager : MonoBehaviour
                 orderCompleted = true;
                 audioSource.PlayOneShot(successSound);
                 totalOrdersCompleted++;
-                if (dataController != null)
-                {
-                    var data = dataController.GetComponent<UserProfileData>();
-                    if (data != null)
-                    {
-                        data.ordersCompleted = totalOrdersCompleted;
-                    }
-                }
+                // if (dataController != null)
+                // {
+                //     var data = dataController.GetComponent<UserProfileData>();
+                //     if (data != null)
+                //     {
+                //         data.ordersCompleted = totalOrdersCompleted;
+                //     }
+                // }
                 return false;
             }
             else if (currentStepIndex >= currentOrderSteps.Count)

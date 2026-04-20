@@ -1569,7 +1569,6 @@ MonoBehaviour:
   totalOrdersCompleted: 0
   totalOrdersFailed: 0
   totalMoneyMade: 0
-  dataController: {fileID: 1272573289}
   audioSource: {fileID: 201479643}
   failSound: {fileID: 8300000, guid: 963d70a27a73cd7448965a65e6362581, type: 3}
   successSound: {fileID: 8300000, guid: 1ffa8c9095553e442ae1c00ecb3abc67, type: 3}
@@ -18101,6 +18100,7 @@ MonoBehaviour:
   interactDistance: 3
   moneyText: {fileID: 309825544}
   isMenuOpen: 0
+  orderManager: {fileID: 201479642}
 --- !u!114 &1179336105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18622,7 +18622,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1272573290
 Transform:
   m_ObjectHideFlags: 0

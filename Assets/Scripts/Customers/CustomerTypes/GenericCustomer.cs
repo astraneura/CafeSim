@@ -136,8 +136,8 @@ public class GenericCustomer : MonoBehaviour, ICustomer
         Debug.Log($"{customerName} ran out of patience and left!");
         OrderManager.Instance.ClearCurrentOrder();
         OrderManager.Instance.totalOrdersFailed++;
-        OrderManager.Instance.dataController.GetComponent<UserProfileData>().ordersFailed
-        = OrderManager.Instance.totalOrdersFailed;
+        // OrderManager.Instance.dataController.GetComponent<UserProfileData>().ordersFailed
+        // = OrderManager.Instance.totalOrdersFailed;
         Destroy(gameObject);
     }
 
