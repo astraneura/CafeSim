@@ -1,13 +1,15 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 public class PlayerPause : MonoBehaviour
 {
     [SerializeField] private InputActionReference pauseAction;
-    [SerializeField]private GameObject pauseMenuUI;
+    [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private GameObject instructionsUI;
-[SerializeField] private PlayerInteraction playerInteraction;
+    [SerializeField] private PlayerInteraction playerInteraction;
+    public AudioMixer mixer;
     private MouseLook mouseLook;
 
 
@@ -42,7 +44,8 @@ public class PlayerPause : MonoBehaviour
         {
             Time.timeScale = 0; // Pause the game
             Cursor.lockState = CursorLockMode.None;
-            pauseMenuUI.SetActive(true); 
+            mixer.SetFloat("MasterLowPass", 350f);
+            pauseMenuUI.SetActive(true);
             mouseLook.enabled = false;
             playerInteraction.isMenuOpen = true;
         }
@@ -50,6 +53,7 @@ public class PlayerPause : MonoBehaviour
         {
             Time.timeScale = 1; // Resume the game
             Cursor.lockState = CursorLockMode.Locked;
+            mixer.SetFloat("MasterLowPass", 22000f);
             pauseMenuUI.SetActive(false);
             mouseLook.enabled = true;
             playerInteraction.isMenuOpen = false;
@@ -64,6 +68,7 @@ public class PlayerPause : MonoBehaviour
         pauseMenuUI.SetActive(false);
         mouseLook.enabled = true;
         playerInteraction.isMenuOpen = false;
+        mixer.SetFloat("MasterLowPass", 22000f);
     }
 
     public void OnInstructions()
@@ -77,7 +82,7 @@ public class PlayerPause : MonoBehaviour
         instructionsUI.SetActive(false);
         pauseMenuUI.SetActive(true);
     }
-    
+
     public void OnQuit()
     {
         Application.Quit(); // Quit the application
