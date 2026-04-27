@@ -4,7 +4,7 @@ using UnityEngine.Audio;
 public class IdleLowPass : MonoBehaviour
 {
     public AudioMixer mixer;
-    public float maxIdleTime = 4f;
+    public float maxIdleTime = 10f;
 
     Vector3 checkPosition;
     float checkTimer;

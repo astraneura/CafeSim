@@ -181,12 +181,6 @@ public class ConfusedCustomer : MonoBehaviour, ICustomer
         int currentEmotional = DrinkManager.Instance.GetEmotionalBalanceForQuality(chosenEmotionalQuality);
         int currentPhysical = DrinkManager.Instance.GetPhysicalBalanceForQuality(chosenPhysicalQuality);
 
-        Debug.Log(
-        $"CHECKING ORDER:\n" +
-        $"Emotional: {chosenEmotionalQuality} | Current: {currentEmotional} | Target: {desiredEmotionalQualityValue}\n" +
-        $"Physical: {chosenPhysicalQuality} | Current: {currentPhysical} | Target: {desiredPhysicalQualityValue}"
-    );
-
         if (currentEmotional == desiredEmotionalQualityValue && currentPhysical == desiredPhysicalQualityValue)
         {
             hasOrderBeenCompleted = true;

@@ -18247,7 +18247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   footstepSource: {fileID: 1179336107}
-  stepDistance: 0.85
+  stepDistance: 0.75
 --- !u!114 &1179336109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18261,7 +18261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mixer: {fileID: 24100000, guid: ab4a6ef23dada404b9da688bb1d68825, type: 2}
-  maxIdleTime: 4
+  maxIdleTime: 10
 --- !u!1 &1184044918
 GameObject:
   m_ObjectHideFlags: 0

@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 1a514324fe30a304d895391e24bb2fa2, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -153,7 +153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -24, y: -184}
+  m_AnchoredPosition: {x: -431, y: 65.4}
   m_SizeDelta: {x: 403.6457, y: 192.0566}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9225196
@@ -692,7 +692,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &376251787
 RectTransform:
   m_ObjectHideFlags: 0
@@ -833,7 +833,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -434.5302, y: -104.61}
+  m_AnchoredPosition: {x: 447, y: 185}
   m_SizeDelta: {x: 371.738, y: 350.84}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &558641337
@@ -1297,7 +1297,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 409, y: -238}
+  m_AnchoredPosition: {x: 17.3, y: 258.2}
   m_SizeDelta: {x: 418.8154, y: 199.2745}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1069448116
@@ -1848,7 +1848,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 409, y: 3}
+  m_AnchoredPosition: {x: -429.3, y: -129.4}
   m_SizeDelta: {x: 414.1708, y: 197.0646}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1577460595
@@ -2198,7 +2198,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -24, y: 36}
+  m_AnchoredPosition: {x: -431, y: 259.3}
   m_SizeDelta: {x: 404.9779, y: 192.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1665914752
@@ -2221,10 +2221,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Order steps will be white until completed
+  m_text: 'Complete customer orders to earn money
 
-    Completed steps will turn
-    green'
+    Earn at least 75$ to win
+
+    Order
+    steps will be white until completed
+
+    Completed steps will turn green'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5e67f2a9ef6028a44ab885ee83adb565, type: 2}
   m_sharedMaterial: {fileID: 2219435426526397697, guid: 5e67f2a9ef6028a44ab885ee83adb565, type: 2}
@@ -2251,7 +2255,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 33
+  m_fontSize: 22
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2742,7 +2746,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 413, y: 238}
+  m_AnchoredPosition: {x: 417, y: -254}
   m_SizeDelta: {x: 439.9, y: 209.3085}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1870554403
@@ -3024,7 +3028,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -314, y: 233}
+  m_AnchoredPosition: {x: 58, y: -29}
   m_SizeDelta: {x: 486.7984, y: 231.6211}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1910078472
